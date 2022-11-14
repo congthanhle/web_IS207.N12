@@ -1,0 +1,34 @@
+.search{
+  h2 {
+    text-align: center;
+    font-size: 3rem;
+    margin-bottom: 10px;
+  }
+  
+  h5 {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 300;
+  
+    span {
+      font-weight: 500;
+  
+    }
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+  
+    a {
+      font-size: 1.5rem;
+  
+      padding: 6px 16px;
+  
+    }
+  
+  
+  }
+
+}

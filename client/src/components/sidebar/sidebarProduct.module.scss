@@ -1,0 +1,16 @@
+@import '../../scss/variables';
+.sidebar{
+    .accordionItem {
+        font-size: 1.4rem;
+        
+           
+            button{
+                text-transform: uppercase;
+                font-size: 1.3rem;
+                background-color: #f8f6f5;
+                font-weight: 600;
+                color: $second-color;
+            }
+        
+    }
+}

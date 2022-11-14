@@ -1,0 +1,30 @@
+@import '../../scss/variables';
+.promotion{
+    margin-top: 3rem;
+    h1{
+        font-size: 3rem;
+        margin-bottom: 3rem;
+    }
+    .card{
+        margin-bottom: 3rem;
+        border: none;
+        .cardTitle{
+            font-size: 1.8rem;
+            font-weight: bold;
+            &:hover{
+                cursor: pointer;
+                color: $main-color;
+            }
+        }
+        .cardBody{
+            font-size: 1.6rem;
+            b{
+                color: $main-color;
+            }
+        }
+        .cardImg{
+            
+        }
+    }
+   
+}

@@ -1,0 +1,150 @@
+@import '../../scss/_variables';
+
+
+.home {
+    .homeContainer {
+        .homeSession {           
+            padding: 4rem 12rem;
+            margin-bottom: 3rem;
+            span{
+                &:hover{
+                    color: $main-color;
+                }
+            }
+            .card {
+                border: none;
+            }
+
+
+            .titleContainer {
+                text-align: center;
+                font-size: 2.4rem;
+                text-transform: uppercase;
+                font-weight: 500;
+                margin-bottom: 4rem;
+                color: $second-color;
+                cursor: pointer;
+
+                
+            }
+
+            .cardTitle {
+                color: $main-color;
+            }
+        }
+
+        .productAndService {
+            // border-bottom: 0.1rem dashed $second-color;
+            .cardProduct {
+                border-radius: 50%;
+                background-color: $second-color;
+                .cardImage {
+                    transform: scale(0.8, 0.8);
+                    cursor: pointer;
+                }
+            }
+            .cardTitle {
+                text-align: center;
+                font-size: 1.8rem;
+                cursor: pointer;
+                font-weight: 400;
+                color: $second-color;
+            }
+        }
+        .sale {
+            .icon {
+                width: 11rem;
+                height: 11rem;
+            }
+        }
+
+        .featureProducts {}
+
+        .introProduct {
+
+            color: $light-color;
+            background-color: none;
+            width: 100%;
+            height: 70rem;
+            background-image: url(https://ldr.vn/wp-content/uploads/thumbnail-for-9555.jpg);
+            background-size: cover;
+            background-attachment: fixed;
+            backdrop-filter: 30;
+            background-repeat: no-repeat;
+            position: relative;
+
+            .titleContainer {
+                font-size: 3.2rem;
+                color: $light-color;
+                margin-bottom: 8rem;
+                margin-top: 4rem;
+            }
+
+            .card {
+                background-color: rgba(0, 0, 0, 0.0);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                
+                .cardTitle {
+                    font-size: 2.5rem;
+                    text-transform: uppercase;
+                    margin-bottom: 2rem;
+                }
+
+                .cardContent {
+                    font-size: 1.5rem;
+                }
+
+                .cardImg {
+                    width: 15rem;
+                    height: 15rem;
+                    margin-bottom: 2rem;
+                }
+            }
+
+            &::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                width: 100%;
+                height: 55px;
+                background-image: url(//theme.hstatic.net/200000309869/1000702189/14/bkg_footer_white.png?v=256);
+                background-repeat: repeat-x;
+                background-position: 50% 100%;
+                top: -1px;
+            }
+
+            &::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                height: 55px;
+                background-image: url(//theme.hstatic.net/200000309869/1000702189/14/bkg_footer_white.png?v=256);
+                background-repeat: repeat-x;
+                
+            }
+
+            .sub_img_1{
+                width: 20rem;
+                position: absolute;
+                right: 6rem;
+                top: -4rem;
+                z-index: 1;
+            }
+            .sub_img_2{
+                position: absolute;
+                width: 28rem;
+                bottom: -8rem;
+                left: 6rem;
+                z-index: 1;
+            }
+        }
+
+        
+    }
+
+}

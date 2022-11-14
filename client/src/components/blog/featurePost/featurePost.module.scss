@@ -1,0 +1,20 @@
+.card{
+    margin-bottom: 4rem;
+    .cardTitle{
+        font-size: 1.6rem;
+        text-align: center;
+        margin-block: 1.6rem;
+        letter-spacing: 0.2rem;
+    }
+    .listGroup{
+        font-size: 1.6rem;
+        margin-inline: 1rem;
+        .listGroupItem{
+            border: none;
+            margin: 0.8rem 1rem;
+            &:hover{
+                cursor: pointer;
+            }
+        }
+    }
+}

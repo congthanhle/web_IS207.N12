@@ -1,0 +1,152 @@
+@import '../../scss/variables';
+
+
+
+
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-inline: 10rem;
+    font-size: 1.6rem;
+    background-color: white;
+    border-bottom: #c6c5c4 solid 0.1px;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+
+    .navLeft {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        color: $second-color;
+
+        .navLogo {
+            margin-right: 0.5rem;
+            width: 11.5rem;
+            height: 11.5rem;
+        }
+
+        .logoDisc {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+
+            .brandName {
+                font-size: 3rem;
+                font-weight: 700;
+                letter-spacing: 0.12rem;
+                color: $main-color;
+            }
+
+            .slogan {
+                font-size: 1.3rem;
+            }
+        }
+    }
+
+    .navLink {
+        cursor: pointer;
+        color: $second-color;
+
+        &:hover {
+            color: $main-color;
+        }
+    }
+
+    .navCenter {
+        display: flex;
+        flex-direction: column;
+
+        .navList {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            margin-top: 2rem;
+
+            li {
+                font-size: 1.6rem;
+                margin: 0 3.6rem;
+
+            }
+        }
+
+        .search {
+            display: flex;
+            height: 3.6rem;
+
+            .input {
+                padding-left: 1rem;
+                font-size: 1.4rem;
+                flex-basis: 90%;
+                border-radius: 30px;
+                border: 1px solid black;
+                border-right: none;
+                outline: none;
+            }
+
+            .button {
+                flex-basis: 10%;
+                border-radius: 30px;
+                color: black;
+                font-size: 1.4rem;
+                border-left: none;
+
+                &:hover {
+                    background-color: $main-color;
+                    color: white;
+                }
+            }
+        }
+    }
+
+    .navRight {
+        display: flex;
+        align-items: center;
+        font-size: 2.4rem;
+
+        li {
+            button {
+                width: 4.2rem;
+                height: 4.2rem;
+                font-size: 2.2rem;
+                border-radius: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: $main-color;
+                background-color: white;
+                border-color: $main-color;
+                .navLink{
+                    color: $main-color;
+                    &:hover {
+                        border-color: $main-color;
+                        background-color: $main-color;
+                        color: white;
+                    }
+                }
+                &:hover {
+                    border-color: $main-color;
+                    background-color: $main-color;
+                    color: white;
+                }
+            }
+
+
+            &:first-child {
+                margin-right: 2rem;
+            }
+
+            &:hover {
+                opacity: 0.8;
+            }
+
+        }
+
+
+
+    }
+}
