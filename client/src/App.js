@@ -17,7 +17,7 @@ import Cart from './pages/cart/Cart';
 import Profile from './pages/profile/Profile';
 import SingleProduct from './pages/singleProduct/SingleProduct';
 import Search from './pages/search/Search';
-
+import Category from './pages/category/Category';
 
 function App() {
   return (
@@ -38,6 +38,7 @@ function App() {
           <Route path='/profile' element={<Profile/>} /> 
           <Route path='/product/:productId' element={<SingleProduct/>} /> 
           <Route path='/productSearch/:productName' element={<Search/>} /> 
+          <Route path='/category' element={<Category/>} /> 
         </Routes>
       </Router>
       <Footer/>

@@ -1,24 +1,34 @@
 import React from 'react';
+import axios from 'axios';
+import { useState, useContext, useEffect } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
+import { URI } from '../../api';
+
 
 export default function Slide() {
+  const [slide, setSlide] = useState([]);
+  useEffect(() => {
+    const getSlide = async () => {
+      const res = await axios.get(`${URI}/slide`);
+      setSlide(res.data);
+    }
+    getSlide();
+    const timerId = setTimeout(getSlide, 200);
+    return () => clearTimeout(timerId);
+  }, []);
   return (
     <Carousel variant="white">
-       
-      <Carousel.Item interval={4000}>
-        <img
-          className="d-block w-100"
-          src="https://theme.hstatic.net/200000309869/1000702189/14/slideshow_3.jpg?v=256"
-          alt="First slide"
-        />
-      </Carousel.Item>
-      <Carousel.Item interval={4000}>
-        <img
-          className="d-block w-100"
-          src="https://theme.hstatic.net/200000309869/1000702189/14/slideshow_2.jpg?v=256"
-          alt="Second slide"
-        />
-      </Carousel.Item>
+      {
+        slide && slide.map((item, index) => (
+          <Carousel.Item interval={4000} key={index}>
+            <img
+              className="d-block w-100"
+              src={item.img_link}
+              alt={item.name}
+            />
+          </Carousel.Item>
+        ))
+      }
     </Carousel>
   )
 }

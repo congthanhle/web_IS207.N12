@@ -54,9 +54,10 @@ class SlideController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($slide)
+    public function show($id)
     {
-        return new SlideResource($slide);
+        $slide = Slide::find($id);
+        return response()->json($slide);
     }
 
     /**
@@ -77,10 +78,11 @@ class SlideController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Slide $slide)
+    public function update(Request $request, $id)
     {
+        $slide = Slide::find($id);
         $slide->update($request->all());
-        return new SlideResource($slide);
+        return  response()->json($slide);
     }
 
     /**

@@ -49,7 +49,7 @@ export default function Profile() {
 
       </Row>
       <Row >
-        <Col lg="5" className='gx-5'>
+        <Col lg="4" className='gx-5'>
           <Card>
             <ListGroup variant="flush">
               <ListGroup.Item className='fs-3 my-2'>
@@ -86,7 +86,7 @@ export default function Profile() {
 
             </ListGroup>
           </Card>
-          <Button onClick={handleLogout} className='mt-3 fs-4' variant='warning'>Đăng xuất</Button>
+          <Button onClick={handleLogout} className='mt-3 fs-4' style={{backgroundColor: '#ff781f', border: 'none'}}>Đăng xuất</Button>
         </Col>
         <Col >
           <Table striped bordered hover className='fs-4 ' style={{ height: 100, overflow: 'auto' }}>

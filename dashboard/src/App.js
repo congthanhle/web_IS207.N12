@@ -4,6 +4,7 @@ import jsonServerProvider from 'ra-data-json-server';
 import {userEdit, userCreate, userList} from './components/User';
 import {catEdit, catCreate, catList} from './components/Category';
 import {productList, productCreate, productEdit} from './components/Product';
+import {slideList, slideCreate, slideEdit} from './components/Slide';
 import LayoutPage from "./layout/LayoutPage";
 import LoginPage from './pages/LoginPage';
 import authProvider from "./authProvider";
@@ -16,7 +17,8 @@ function App() {
     <Admin layout={LayoutPage} dataProvider={dataProvider} loginPage={LoginPage} authProvider={authProvider}>
       <Resource name="user" list={userList} edit={userEdit} create={userCreate}/>
       <Resource name="category" list={catList} edit={catEdit} create={catCreate}/>   
-      <Resource name="product" list={productList} create={productCreate} edit={productEdit}/>     
+      <Resource name="product" list={productList} create={productCreate} edit={productEdit}/>   
+      <Resource name="slide" list={slideList} create={slideCreate} edit={slideEdit} /> 
     </Admin>
 
   );

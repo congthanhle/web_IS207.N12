@@ -15,6 +15,7 @@ import InventoryIcon from '@mui/icons-material/Inventory';
 import DynamicFeedIcon from '@mui/icons-material/DynamicFeed';
 import PersonIcon from '@mui/icons-material/Person';
 import InfoIcon from '@mui/icons-material/Info';
+import LandslideIcon from '@mui/icons-material/Landslide';
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 
 export default function NestedList() {
@@ -45,6 +46,7 @@ export default function NestedList() {
        <MenuItemLink to="/post" leftIcon={<DynamicFeedIcon sx={{ pr: 4 }}/>} primaryText="Posts" sx={{pb: 2}}/>
        <MenuItemLink to="/feedback" leftIcon={<SendIcon sx={{ pr: 4 }}/>} primaryText="Feedback" sx={{pb: 2}}/>
        <MenuItemLink to="/about" leftIcon={<InfoIcon sx={{ pr: 4 }}/>} primaryText="Info" sx={{pb: 2}}/>
+       <MenuItemLink to="/slide" leftIcon={<LandslideIcon sx={{ pr: 4 }}/>} primaryText="Slide" sx={{pb: 2}}/>
     </List>
   );
 }

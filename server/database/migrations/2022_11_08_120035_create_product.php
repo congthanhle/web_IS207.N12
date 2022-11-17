@@ -20,14 +20,13 @@ return new class extends Migration
             $table->unsignedBigInteger('cat_id')->nullable();
             $table->foreign('cat_id')->references('id')->on('category');
             $table->bigInteger('unit_price');
-            $table->float('discount_price')->default(0);
+            $table->bigInteger('discount_price')->default(0);
             $table->integer('quantity')->default(0);      
             $table->string('thumbnail', 255);   
             $table->softDeletes('deleted_at', $precision = 0);
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      *

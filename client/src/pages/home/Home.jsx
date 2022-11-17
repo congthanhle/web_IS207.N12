@@ -8,6 +8,7 @@ import coffeeIcon from '../../assets/images/coffeeIcon.png';
 import coffee_branch from '../../assets/images/coffee_branch.png';
 import coffee_bean from '../../assets/images/coffee_bean.png';
 import styles from './home.module.scss';
+import Navbar from '../../components/navbar/Navbar';
 
 export default function Home() {
   return (

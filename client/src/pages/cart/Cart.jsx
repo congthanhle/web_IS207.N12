@@ -13,6 +13,7 @@ import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { GiReceiveMoney } from 'react-icons/gi';
 import { MdPayment } from 'react-icons/md';
 import styles from './cart.module.scss';
+import {URI} from '../../api';
 
 
 export default function Cart() {
@@ -23,7 +24,7 @@ export default function Cart() {
   var totalPrice = 0;
   useEffect(() => {
     const getProductCart = async () => {
-      const res = await axios.get(`http://127.0.0.1:8000/api/v1/cart/${user.user.id}`);
+      const res = await axios.get(`${URI}/cart/${user.user.id}`);
       setProductCart(res.data);
     }
     getProductCart();
@@ -52,12 +53,12 @@ export default function Cart() {
 
   }
   function updateCartQuantity(cart_id, scope) {
-    axios.put(`http://127.0.0.1:8000/api/v1/cart/updateQuantity/${cart_id}/${scope}`);
+    axios.put(`${URI}/cart/updateQuantity/${cart_id}/${scope}`);
   }
 
   const handleDelete = (e, cart_id) => {
     e.preventDefault();
-    axios.delete(`http://127.0.0.1:8000/api/v1/cart/${cart_id}`)
+    axios.delete(`${URI}/cart/${cart_id}`)
 
     setProductCart(productCart => productCart.filter(el => el.id !== cart_id))
 
@@ -82,7 +83,7 @@ export default function Cart() {
       note: note,
       payment: payment,
     }
-    axios.post(`http://127.0.0.1:8000/api/v1/order`, order);
+    axios.post(`${URI}/order`, order);
   }
   return (
     <Container className="py-5 h-100 fs-4">
@@ -113,7 +114,7 @@ export default function Cart() {
                         <p className="lead fw-normal mb-2 fs-3">{p.product.name}</p>
 
                       </Col>
-                      <Col md="3" lg="3" xl="1"
+                      <Col md="3" lg="3" xl="2"
                         className="d-flex align-items-center justify-content-around pb-2" >
                         <Button color="link" className="px-2 py-2" variant="outline-dark" onClick={(e) => handleDecrement(p.id, p.quantity)}>
                           <AiOutlineMinus />
@@ -122,7 +123,7 @@ export default function Cart() {
                         <Form.Control
                           disabled={true}
                           aria-describedby="basic-addon1"
-                          className="fs-4 p-1"
+                          className="fs-4 p-1 text-center"
                           type='number'
                           min={1}
                           value={p.quantity}
@@ -134,7 +135,7 @@ export default function Cart() {
                       </Col>
                       <Col md="3" lg="2" xl="2" className="offset-lg-1">
                         <h4 className="mb-0">
-                          {p.product.unit_price * p.quantity}đ
+                          {(p.product.unit_price * p.quantity).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}đ
                         </h4>
                       </Col>
                       <Col md="1" lg="1" xl="1" className="text-end fs-2" >
@@ -222,7 +223,7 @@ export default function Cart() {
                     style={{ fontWeight: "500" }}
                   >
                     <p className="mb-2">Tạm tính</p>
-                    <p className="mb-2">{totalPrice}đ</p>
+                    <p className="mb-2">{totalPrice.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}đ</p>
                   </div>
 
                   <div
@@ -240,7 +241,7 @@ export default function Cart() {
                     style={{ fontWeight: "500" }}
                   >
                     <p className="mb-0">Tổng tiền</p>
-                    <p className="mb-0">{totalPrice}đ</p>
+                    <p className="mb-0">{totalPrice.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}đ</p>
                   </div>
 
                   <Button styles={{ width: 100 }} size="lg" onClick={handlePay} className={styles.button}>

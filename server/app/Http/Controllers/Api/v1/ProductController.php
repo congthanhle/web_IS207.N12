@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Http\Resources\v1\ProductCollection;
 use App\Http\Resources\v1\ProductResource;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -25,7 +26,7 @@ class ProductController extends Controller
 
     public function list()
     {
-        return Product::query()->paginate(16);
+        return Product::query()->where('quantity', '>', 0)->paginate(16);
     }
 
     /**
@@ -46,32 +47,44 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-       
-        $product = new Product();
-        $product->name = $request->name;
-        $product->description = $request->description;
-        $product->cat_id = $request->cat_id;
-        $product->unit_price = $request->unit_price;
-        if ($request->hasFile('thumbmnail')) {
-            $thumbmnail = $request->file('thumbmnail');
-            $ext = $thumbmnail->getClientOriginalExtension();
-            $name = time() . '_' . $thumbmnail->getClientOriginalName();
-            Storage::disk('public')->put($name, File::get($thumbmnail));
-            $product->thumbnail = $name;
-        } else {
-            $product->thumbnail = 'default.jpg';
-        }
-        $request->validate([
+
+
+        $validator = Validator::make($request->all(), [
             'name' => 'required',
             'description' => 'required',
             'cat_id' => 'required',
             'unit_price' => 'required',
             'discount_price',
             'quantity',
-            'thumbnail',
+            'thumbnail' => 'required|image|mimes:jpg,png,jpeg|max:2048',
         ]);
-        $product = Product::create($request->all());
-        return new ProductResource($product);
+        if ($validator->fails()) {
+            return response()->json([$validator], 422);
+        } else {
+            $product = new Product();
+            $product->name = $request->name;
+            $product->description = $request->description;
+            $product->cat_id = $request->cat_id;
+            $product->unit_price = $request->unit_price;
+            if ($request->hasFile('thumbmnail')) {
+                $thumbmnail = $request->file('thumbmnail');
+                $ext = $thumbmnail->getClientOriginalExtension();
+                $name = time() . '_' . $ext;
+                $thumbmnail->move('uploads/product/', $name);
+                $product->thumbnail = 'uploads/product/'.$name;
+            } else {
+                $product->thumbnail = 'default.jpg';
+            }
+            $product->save();
+            return response()->json([
+                'status' => 200,
+                'message' => 'product added successfully'
+            ]);
+            
+        }
+
+        // $product = Product::create($request->all());
+        // return new ProductResource($product);
     }
 
     /**
@@ -106,7 +119,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $product = Product::find($id);
         $product->update($request->all());
         return  response()->json($product);
@@ -123,7 +136,7 @@ class ProductController extends Controller
         $product->delete();
     }
 
-     /**
+    /**
      * Remove the specified resource from storage.
      *
      * @param  str $name
@@ -131,12 +144,12 @@ class ProductController extends Controller
      */
     public function search(Request $req)
     {
-        return Product::where('name','like','%'.$req->name.'%')->paginate(15);
+        return Product::where('name', 'like', '%' . $req->name . '%')->paginate(15);
     }
 
     public function searchCategory($id)
     {
-        $product = Product::join('category', 'cat_id', '=', 'category.id')->where('cat_id', $id)->orWhere('parent_id', $id)->select('product.id','product.name','unit_price','thumbnail','discount_price')->get();
+        $product = Product::join('category', 'cat_id', '=', 'category.id')->where('cat_id', $id)->orWhere('parent_id', $id)->select('product.id', 'product.name', 'unit_price', 'thumbnail', 'discount_price')->get();
         return $product;
     }
 }

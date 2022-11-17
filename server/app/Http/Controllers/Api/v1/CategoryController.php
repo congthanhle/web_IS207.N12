@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\v1\CategoryResource;
 
 class CategoryController extends Controller
@@ -38,11 +39,33 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' =>'required',
-            'parent_id',
-            'cat_code'
-        ]);
+        
+        // $request->validate([
+        //     'name' =>'required',
+        //     'parent_id',
+        //     'cat_code',
+        //     'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        // ]);
+       
+            $cat = new Category();
+            $cat->name = $request->name;
+            $cat->parent_id = $request->parent_id;
+            $cat->cat_code = $request->cat_code;
+            $file = $request->file('image.rawFile');
+            $ext = $file->getClientOriginalExtension();
+            $name = time() . '_' . $ext;
+            $file->move('uploads/product/', $name);
+            $cat->thumbnail = $name;
+            // return response()->json([
+            //     'status' => 200,
+            //     'message' => 'Category added successfully'
+            // ]);
+        
+    //     $request->validate([
+    //         'name' =>'required',
+    //         'parent_id',
+    //         'cat_code'
+    //     ]);
         $cat = Category::create($request->all());
        return new CategoryResource($cat);
     }

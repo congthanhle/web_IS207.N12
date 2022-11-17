@@ -8,22 +8,26 @@ import Card from 'react-bootstrap/Card';
 import { FaEye } from 'react-icons/fa';
 import styles from './productCard.module.scss';
 import {URI} from '../../api';
+import Swal from 'sweetalert2';
 
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+    
+  })
 
 export default function ProductCard({product}) {
     const [showBtn, setShowBtn] = useState(false);
-    const [productCart, setProductCart] = useState([]);
     const { user } = useContext(Context);
 
-    useEffect(() => {
-        const getProductCart = async () => {
-          const res = await axios.get(`http://127.0.0.1:8000/api/v1/cart/${user.user.id}`);
-          setProductCart(res.data);
-        }
-        getProductCart();
-        const timerId = setTimeout(getProductCart, 200);
-        return () => clearTimeout(timerId);
-      },[]);
+   
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -35,6 +39,11 @@ export default function ProductCard({product}) {
         
         try{
             const res = await axios.post(`${URI}/cart`, newProduct);
+            res.data && Swal.fire(
+                '',
+                'Thêm sản phẩm thành công',
+                'success'
+              )
         }catch(e){}
     } 
     const handleShow =(proId) => {
