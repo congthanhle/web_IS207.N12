@@ -1,0 +1,60 @@
+@import '../../scss/variables';
+.category{
+  margin-block: 30px;
+    h2 {
+      text-align: center;
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+    
+    h5 {
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 300;
+    
+      span {
+        font-weight: 500;
+    
+      }
+    }
+    
+    .pagination{
+      display: flex;
+      justify-content: center;
+      margin-top: 3rem;
+  
+      a {
+        font-size: 1.5rem;
+  
+        padding: 6px 16px;
+  
+      }
+  
+      .paginationActive {
+        .paginationLinkActive {
+          color: $light-color !important;
+          background-color: $main-color;
+          border: 0.2px solid $main-color;
+  
+        }
+      }
+  
+      .paginationItem {
+  
+        .paginationLinkItem {
+          color: $main-color;
+          border: 0.2px solid $main-color;
+          text-decoration: none;
+          margin-inline: 1.5px;
+          border-radius: 4px;
+  
+          &:hover {
+            color: $light-color !important;
+            background-color: $main-color;
+          }
+        }
+      
+      }
+  }
+  }
+  

@@ -55,27 +55,27 @@ export default function Introduction() {
         <ul className={styles.information_2}>
           <li className={styles.reverse}>
             <img src="https://theme.hstatic.net/200000309869/1000702189/14/members_1_about3_img.jpg?v=258" alt="" />
-            <h1>Cung Cấp Cà Phê</h1>
+            <div className={styles.text}>Cung Cấp Cà Phê</div>
           </li>
           <li >
-            <img src="https://theme.hstatic.net/200000309869/1000702189/14/members_1_about3_img.jpg?v=258" alt="" />
-            <h1>Máy Pha Cà Phê 1 Group - 2 Group - Tự Động</h1>
+            <img src="https://theme.hstatic.net/200000309869/1000702189/14/members_2_about3_img.jpg?v=261" alt="" />
+            <div className={styles.text}>Máy Pha Cà Phê 1 Group - 2 Group - Tự Động</div>
           </li>
           <li className={styles.reverse}>
-            <img src="https://theme.hstatic.net/200000309869/1000702189/14/members_1_about3_img.jpg?v=258" alt="" />
-            <h1>Cung Cấp Máy Xay Cà Phê Cao cấp</h1>
+            <img src="https://theme.hstatic.net/200000309869/1000702189/14/members_3_about3_img.jpg?v=261" alt="" />
+            <div className={styles.text}>Cung Cấp Máy Xay Cà Phê Cao cấp</div>
           </li>
           <li >
-            <img src="https://theme.hstatic.net/200000309869/1000702189/14/members_1_about3_img.jpg?v=258" alt="" />
-            <h1>Dụng Cụ Pha Chế - Barista Mart</h1>
+            <img src="https://theme.hstatic.net/200000309869/1000702189/14/members_4_about3_img.jpg?v=261" alt="" />
+            <div className={styles.text}>Dụng Cụ Pha Chế - Barista Mart</div>
           </li>
           <li className={styles.reverse}>
-            <img src="https://theme.hstatic.net/200000309869/1000702189/14/members_1_about3_img.jpg?v=258" alt="" />
-            <h1>Trải Nghiệm Rang Cà Phê</h1>
+            <img src="https://theme.hstatic.net/200000309869/1000702189/14/members_5_about3_img.jpg?v=261" alt="" />
+            <div className={styles.text}>Trải Nghiệm Rang Cà Phê</div>
           </li>
           <li>
-            <img src="https://theme.hstatic.net/200000309869/1000702189/14/members_1_about3_img.jpg?v=258" alt="" />
-            <h1>Tư Vấn Gu Cà Phê Phù Hợp</h1>
+            <img src="https://theme.hstatic.net/200000309869/1000702189/14/members_6_about3_img.jpg?v=261" alt="" />
+            <div className={styles.text}>Tư Vấn Gu Cà Phê Phù Hợp</div>
           </li>
         </ul>
       </Container>

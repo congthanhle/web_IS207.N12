@@ -1,6 +1,9 @@
 @import '../../scss/_variables';
 
 .container{
+    img{
+        width: 100%;
+    }
     .button {
         margin-top: 1rem;
         width: 100% ;

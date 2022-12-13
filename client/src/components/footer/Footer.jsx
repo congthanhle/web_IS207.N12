@@ -32,7 +32,7 @@ export default function Footer() {
                 </a>
               </p>
               <p>
-                <a href='#!' className='text-reset'>
+                <a href='/contact' className='text-reset'>
                   Liên hệ
                 </a>
               </p>
@@ -51,17 +51,12 @@ export default function Footer() {
             <Col md="3" lg="2" xl="3" >
               <h6 className={`text-uppercase fw-bold mb-4 ${styles.catName}`} >Sản phẩm & dịch vụ</h6>
               <p>
-                <a href='#!' className='text-reset'>
+                <a href='/collections' className='text-reset'>
                   Sản phẩm
                 </a>
               </p>
               <p>
-                <a href='#!' className='text-reset'>
-                  Dịch vụ
-                </a>
-              </p>
-              <p>
-                <a href='#!' className='text-reset'>
+                <a href='/promotion' className='text-reset'>
                   Khuyến mãi
                 </a>
               </p>
@@ -76,11 +71,11 @@ export default function Footer() {
               </p>
               <p>
                 <GrMail className="me-3"/>
-                fiveme@gmail.coffee
+                fivemen.coffee@gmail.com
               </p>
               <p>
                 <FaPhone className="me-3"/>
-                + 01 234 567 88
+                039.2333.687
               </p>
 
               <div>

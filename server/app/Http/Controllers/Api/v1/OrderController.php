@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Cart;
-use App\Http\Resources\v1\OrderCollection;
+use App\Models\User;
 use App\Http\Resources\v1\OrderResource;
+use Illuminate\Support\Facades\Mail;
+
 
 class OrderController extends Controller
 {
@@ -46,31 +48,39 @@ class OrderController extends Controller
         $order->payment = $request->payment;
         $order->total_money = 0;
         $order->save();
-
         $cart = Cart::where('user_id', $request->user_id)->get();
-        
         $cartItems = [];
-        
         $totalPrice = 0;
         foreach($cart as $item){
             $cartItems[] = [
                 'product_id' => $item->product_id,
                 'unit_price' => $item->product->unit_price,
-                'quantity' => $item->quantity
-                
+                'quantity' => $item->quantity,
             ];
             $item->product->update([
                 'quantity' => $item->product->quantity - $item->quantity
             ]);
            $totalPrice += $item->quantity * $item->product->unit_price; 
         }
-        
-        
         $order->update([
             'total_money' => $totalPrice
         ]);
         $order->orderItems()->createMany($cartItems);
+        $user = User::find($request->user_id);
+        $name = $user->fullname;
+        $address = $user->address;
+        $phone = $user->phone_number;
+        $order_id = $order->id;
+        $order_date = $order->created_at;
+        $status = $order->status;
+        $total_money = $totalPrice;
+       $orderItems = $order->orderItems;
+        Mail::send('bill', compact(['name', 'address','phone', 'order_id', 'order_date', 'status', 'total_money', 'orderItems']), function ($email) use($user){
+            $email->subject('Hóa đơn điện tử');
+            $email->to($user->email, $user->fullname);
+        });
         Cart::destroy($cart);
+        
     }
 
     /**
@@ -79,10 +89,11 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($uid)
+    public function show($id)
     {
         
-        return Order::where('user_id',$uid)->get();
+        $order = Order::with('orderItems')->find($id);
+        return $order->toJson();
     }
 
     /**
@@ -118,5 +129,34 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         $order->delete();
+    }
+
+    public function getOrderUser($id)
+    {
+        $order = Order::with('orderItems')->where('user_id', $id)->get();
+        return $order->toJson();
+    }
+    public function getAmount()
+    {
+        $order = Order::all();
+        return $order->count();
+    }
+    public function getRevenueToday()
+    {
+        $today = Order::where(Order::raw('date(created_at)'), '>=', Order::raw('date(CURDATE())'))->sum('total_money');
+        return $today;
+    }
+
+    public function getRevenueMonthly(){
+        return Order::select(
+            Order::raw('year(created_at) as year'),
+            Order::raw('month(created_at) as name'),
+            Order::raw('sum(total_money) as Total'),
+        )
+            ->where(Order::raw('year(created_at)'), '>=', Order::raw('year(CURDATE())'))
+            ->groupBy('year')
+            ->groupBy('name')
+            ->get()
+            ->toArray();
     }
 }

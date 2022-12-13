@@ -1,18 +1,22 @@
 @import '../../scss/_variables';
-.introduction{
-    
-    .information_1{
+
+.introduction {
+
+    .information_1 {
         text-align: center;
         margin-block: 8rem;
-        h1{
+
+        .text {
             font-size: 3rem;
             font-weight: 500;
             margin-bottom: 1.6rem;
         }
-        h2{
+
+        h2 {
             font-size: 1.8rem;
             font-weight: 400;
         }
+
         .card {
             background-color: rgba(0, 0, 0, 0.0);
             display: flex;
@@ -21,16 +25,17 @@
             justify-content: center;
             border: none;
             margin-top: 5rem;
+
             .cardTitle {
                 font-size: 2rem;
                 text-transform: uppercase;
                 margin-bottom: 2rem;
             }
-    
+
             .cardContent {
                 font-size: 1.5rem;
             }
-    
+
             .cardImg {
                 width: 12rem;
                 height: 12rem;
@@ -38,26 +43,33 @@
             }
         }
     }
-    .information_2{
+
+    .information_2 {
         display: flex;
         flex-direction: column;
         margin-bottom: 4rem;
-        li{
+
+        li {
             display: flex;
             align-items: center;
             text-align: center;
-            
-            &.reverse{
-                flex-direction: row-reverse;
-            }
-            h1{
+
+            .text {
+                font-size: 2.4rem;
+                font-weight: 500;
                 text-align: center;
                 width: 50%;
+
             }
-            img{
+
+            &.reverse {
+                flex-direction: row-reverse;
+            }
+
+            img {
                 width: 50%;
             }
         }
     }
-    
+
 }

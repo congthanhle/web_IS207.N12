@@ -22,7 +22,7 @@ class UserController extends Controller
         $user = User::all();
         return response()->json($user)->withHeaders(['X-Total-Count' => $user->count()]);
     }
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -43,10 +43,10 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $fields = $request->validate([
-            'fullname' =>'required|string',
-            'email' =>'required|string|unique:user,email',
-            'phone_number' =>'required',
-            'address' =>'required|string',
+            'fullname' => 'required|string',
+            'email' => 'required|string|unique:user,email',
+            'phone_number' => 'required',
+            'address' => 'required|string',
             'password' => 'required|string|confirmed',
         ]);
         $user = User::create([
@@ -73,8 +73,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
-        return response()->json($user);
+        $user = User::with('order')->find($id);
+        return $user->toJson();
     }
 
     /**
@@ -97,9 +97,13 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $user = User::find($id);
         $user->update($request->all());
+        if(!empty($request->password))
+        {
+            $user->update(['password' => bcrypt($request->password)]);
+        }
         return  response()->json($user);
     }
 
@@ -112,5 +116,10 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
+    }
+    public function getAmount()
+    {
+        $user = User::where('isAdmin', 0)->get();
+        return $user->count();
     }
 }

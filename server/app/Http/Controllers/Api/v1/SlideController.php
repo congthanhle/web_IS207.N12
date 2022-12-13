@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Slide;
-use App\Http\Resources\v1\SlideCollection;
-use App\Http\Resources\v1\SlideResource;
+use Illuminate\Support\Facades\Validator;
+
 
 class SlideController extends Controller
 {
@@ -39,13 +39,30 @@ class SlideController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' =>'required',
-            'img_link'  =>'required',
-            'status'
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'thumbnail' => 'required|image',
         ]);
-        $slide = Slide::create($request->all());
-       return new SlideResource($slide);
+        if ($validator->fails()) {
+            return response()->json([$validator], 422);
+        } else {
+            $product = new Slide();
+            $product->name = $request->name;
+            if ($request->hasFile('thumbnail')) {
+                $thumbmnail = $request->file('thumbnail');
+                $ext = $thumbmnail->getClientOriginalName();
+                $name = time() . '_' . $ext;
+                $thumbmnail->move('uploads/slide/', $name);
+                $product->thumbnail = 'uploads/slide/'.$name;
+            } else {
+                $product->thumbnail = 'default.jpg';
+            }
+            $product->save();
+            return response()->json([
+                'status' => 200,
+                'message' => 'product added successfully'
+        ]);}
+            
     }
 
     /**

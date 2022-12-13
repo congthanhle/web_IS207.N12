@@ -24,12 +24,11 @@ class ImageController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'file' => 'required|image',
         ]);
-            $file = $request->file('image');
+            $file = $request->file('file');
             $name = $request->name;
             $file->move('uploads/product/', $name);
-    
         /* 
             Write Code Here for
             Store $imageName name in DATABASE from HERE 

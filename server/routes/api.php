@@ -9,7 +9,10 @@ use App\Http\Controllers\Api\v1\CategoryController;
 use App\Http\Controllers\Api\v1\ProductController;
 use App\Http\Controllers\Api\v1\CartController;
 use App\Http\Controllers\Api\v1\OrderController;
+use App\Http\Controllers\Api\v1\OrderDetailController;
 use App\Http\Controllers\Api\v1\SlideController;
+use App\Http\Controllers\Api\v1\PostController;
+use App\Http\Controllers\Api\v1\FeedbackController;
 use App\Http\Controllers\ImageController;
 
 
@@ -29,42 +32,42 @@ use App\Http\Controllers\ImageController;
 // Route::get('upload-file', function() {
 //     Storage::disk('google')->put('google-drive.txt', 'Google Drive As Filesystem In Laravel (ManhDanBlogs)');
 // });
-Route::controller(ImageController::class)->group(function(){
-    Route::get('image-upload', 'index');
-    Route::post('imageUpload', 'store');
-});
+
 Route::prefix('v1')->group(function () {
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
-    Route::post('logout', [AuthController::class, 'logout']);
-    Route::get('/productSearch', [ProductController::class, 'search']);
-    Route::get('/product/list', [ProductController::class, 'list']);
-    Route::get('/product/searchCat/{cat}', [ProductController::class, 'searchCategory']);
-    Route::resource('user', UserController::class);
-    Route::resource('order', OrderController::class);
-    Route::resource('orderDetail', OrderDetailController::class);
-    Route::resource('cart', CartController::class);
-    Route::resource('slide', SlideController::class);
-    Route::put('/cart/updateQuantity/{card_id}/{scope}', [CartController::class, 'updateQuantity']);
-    Route::resource('category', CategoryController::class)->only(['store', 'update', 'destroy']);
-            Route::resource('product', ProductController::class)->only(['store', 'update', 'destroy']);  
+    Route::post('test', [AuthController::class, 'getPassword']);
     Route::group(['middleware' => 'cors'], function () {
-        // Route::resource('user', UserController::class);
-        Route::resource('category', CategoryController::class);
-        Route::resource('product', ProductController::class);
-
-
+        Route::get('/post/list', [PostController::class, 'list']);
+        Route::get('/productSearch', [ProductController::class, 'search']);
+        Route::get('/product/list', [ProductController::class, 'list']);
+        Route::get('/product/getCombo', [ProductController::class, 'getCombo']);
+        Route::get('/product/getComboList', [ProductController::class, 'getComboList']);
+        Route::get('/product/searchCat/{cat}', [ProductController::class, 'searchCategory']);
+        Route::get('/product/getCat/{cat}', [ProductController::class, 'getProductCategory']);
+        Route::get('/getTopSales', [ProductController::class, 'getTopSales']);
+        Route::resource('category', CategoryController::class)->only(['index', 'show']);
+        Route::resource('slide', SlideController::class)->only(['index']);
+        Route::resource('feedback', FeedbackController::class)->only(['store']);
+        Route::resource('product', ProductController::class)->only(['show', 'list', 'index']);
+        Route::resource('post', PostController::class)->only(['index', 'list', 'show']);
+        Route::put('/cart/updateQuantity/{card_id}/{scope}', [CartController::class, 'updateQuantity']);
         Route::group(['middleware' => ['auth:sanctum']], function () {
-          
-            
-           
-           
-            // Route::resource('about', ProductController::class)->only(['store', 'update', 'destroy']);      
-            // Route::resource('slide', ProductController::class)->only(['store', 'update', 'destroy']);      
-            // Route::resource('post', ProductController::class)->only(['store', 'update', 'destroy']);   
-            // Route::resource('feedback', ProductController::class);   
-
-
+            Route::get('/getAmountUser', [UserController::class, 'getAmount']);
+            Route::get('/getAmountOrder', [OrderController::class, 'getAmount']);
+            Route::get('/postAmount', [PostController::class, 'getAmount']);
+            Route::get('/getRevenueToday', [OrderController::class, 'getRevenueToday']);
+            Route::get('/getRevenueMonthly', [OrderController::class, 'getRevenueMonthly']);
+            Route::resource('user', UserController::class);
+            Route::get('/order/user/{id}', [OrderController::class, 'getOrderUser']);
+            Route::resource('post', PostController::class)->except(['index', 'list', 'show']);
+            Route::resource('order', OrderController::class);
+            Route::resource('slide', SlideController::class)->except(['index']);
+            Route::resource('feedback', FeedbackController::class)->except(['store']);
+            Route::resource('category', CategoryController::class)->except(['index', 'show']);
+            Route::resource('product', ProductController::class)->except(['show', 'list', 'index']);
+            Route::resource('cart', CartController::class);
+            Route::post('logout', [AuthController::class, 'logout']);
         });
     });
 });

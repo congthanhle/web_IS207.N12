@@ -46,12 +46,12 @@ export default function Navbar() {
             </Link>
             <div className={styles.navCenter}>
                 <InputGroup className={styles.search}>
-                    <input placeholder="Tìm kiếm tại đây..." type='text' className={styles.input} onChange={(e)=>setSearch(e.target.value)}/>
+                    <input placeholder="Tìm kiếm sản phẩm tại đây..." type='text' className={styles.input} onKeyPress={e => {e.key === 'Enter' && (search &&  window.location.replace(`/productSearch/${search}`))}} onChange={(e)=>setSearch(e.target.value)}/>
                     <Button className={styles.button} variant="outline-dark" onClick={handleSearch}><FaSearch /></Button>
                 </InputGroup>
                 <ul className={styles.navList}>
                     <li >
-                        <Link className={`${styles.navLink} link`} to="/collections/all">
+                        <Link className={`${styles.navLink} link`} to="/collections">
                             Sản phẩm
                         </Link>
                     </li>

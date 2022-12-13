@@ -1,47 +1,94 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import axios from 'axios';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import { useState, useEffect, } from 'react';
+import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router';
+import Products from '../../components/products/Products';
+import SidebarChildren from '../../components/sidebar/SidebarChildren';
+import Pagination from 'react-js-pagination';
+import styles from './category.module.scss';
+import ListGroup from 'react-bootstrap/ListGroup';
+import { IoMdArrowRoundBack } from 'react-icons/io';
+import {URI} from '../../api';
 
+function Category() {
+    const [product, setProduct] = useState([]);
+    const [pageNumber, setPageNumber] = useState(1);
+    const location = useLocation();
+    const path = location.pathname.split("/")[2];
+    const [cat, setCat] = useState({});
+    useEffect(() => {
 
-export default function Catagory() {
-  const [file, setFile] = useState(null);
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(file);
-    if (file) {
-      const data = new FormData();
-      const filename = Date.now() +'_'+ file.name;
-      data.append("name", filename);
-      data.append("image", file);
-      try {
-        console.log(data);
-        await axios.post(`http://127.0.0.1:8000/api/imageUpload`, data);
-      } catch (e) { }
-    }
-  }
-  const handleImg = (e) => {
-    e.preventDefault();
-    setFile(e.target.files[0])
-  }
-  return (
-    <form onSubmit={handleSubmit} method="POST" encType="multipart/form-data">
+        const getCat = async () => {
+            const res = await axios.get(`${URI}/category/${path}`);
+            setCat(res.data);
+        }
+        getCat();
+        const timerId = setTimeout(getCat, 500);
+        return () => clearTimeout(timerId);
+    }, [path]);
+    useEffect(() => {
 
-      <div className="mb-3">
-        <label className="form-label">File:</label>
-        <input
-          type="file"
-          id="fileInput"
-          onChange={(e) => setFile(e.target.files[0])}
-        />
+        const getProduct = async () => {
+            const res = await axios.get(`${URI}/product/searchCat/` + path + `list?page=${pageNumber}`);
+            setProduct(res.data);
+        }
+        getProduct();
+        const timerId = setTimeout(getProduct, 500);
+        return () => clearTimeout(timerId);
+    }, [pageNumber, path]);
+    const { data, current_page, per_page, total } = product;
+    return (
 
+        <Container className={styles.category}>
+            <Row className="g-5">
+                <Col xs lg="3">
+                    {
+                        !cat.parent_id ? <SidebarChildren /> :
+                            <ListGroup>
+                                <ListGroup.Item className='fs-3' style={{ height: 50, fontWeight: 500 }}>
+                                    <Link to={`/collections/${cat.parent_id}`} className={`link fs-3`} style={{ color: 'black' }}><IoMdArrowRoundBack className='mx-4' />{cat.parent.name}</Link>
+                                </ListGroup.Item>
+                            </ListGroup>
+                    }
 
-      </div>
+                </Col>
+                <Col xs lg="9">
+                    <Row className=' mb-5'>
+                        <Col>
+                            <h2>{cat.name}</h2>
+                            <h5>Có <span>{total || 0} sản phẩm</span> cho tìm kiếm</h5>
+                        </Col>
+                    </Row>
+                    <Row xs={1} md={4} className="g-4 mt-4">
+                        <Products products={data} />
+                    </Row>
+                    <Row >
+                    {
+                    total && (
+                      <Col className={styles.pagination}>
+                        <Pagination totalItemsCount={total} activePage={current_page} itemsCountPerPage={per_page}
+                          onChange={(pageNumber) => setPageNumber(pageNumber)}
+                          pageRangeDisplayed={4}
 
-      <div className="mb-3">
-        <button type="submit" className="btn btn-success">Upload</button>
-      </div>
+                          linkClass={styles.paginationLinkItem}
+                          itemClass={styles.paginationItem}
+                          activeLinkClass={styles.paginationLinkActive}
+                          activeClass={styles.paginationActive}
+                          disabledClass={styles.paginationDisabled}
+                        />
+                      </Col>
+                    )
+                  }
+                    </Row>
+                </Col>
+            </Row>
+        </Container>
 
-    </form>
-  )
+    )
 }
+
+export default Category;

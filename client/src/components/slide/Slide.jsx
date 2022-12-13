@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { useState, useContext, useEffect } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
-import { URI } from '../../api';
+import { URI, IMG } from '../../api';
 
 
 export default function Slide() {
@@ -19,11 +19,11 @@ export default function Slide() {
   return (
     <Carousel variant="white">
       {
-        slide && slide.map((item, index) => (
+        slide && slide.map((item, index) => item.status && (
           <Carousel.Item interval={4000} key={index}>
             <img
-              className="d-block w-100"
-              src={item.img_link}
+              className="d-block w-100" 
+              src={`${IMG}/${item.thumbnail}`}
               alt={item.name}
             />
           </Carousel.Item>

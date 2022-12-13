@@ -1,3 +1,4 @@
+@import '../../../scss/_variables';
 .card{
     margin-bottom: 4rem;
     .cardTitle{
@@ -8,12 +9,13 @@
     }
     .listGroup{
         font-size: 1.6rem;
-        margin-inline: 1rem;
+        margin-inline: 0;
         .listGroupItem{
             border: none;
             margin: 0.8rem 1rem;
             &:hover{
                 cursor: pointer;
+                color: $main-color
             }
         }
     }

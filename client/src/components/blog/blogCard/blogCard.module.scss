@@ -1,7 +1,13 @@
 @import '../../../scss/variables';
 
 .card {
-    
+    img{
+        
+            object-fit: fill;
+            max-height: 18rem;
+            min-height: 18rem;
+
+    }
     .cardTitle {
         font-size: 1.6rem;
         font-weight: 500;
@@ -9,7 +15,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
-        -webkit-line-clamp: 1;
+        -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
 
         &:hover {
@@ -24,9 +30,10 @@
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
-        -webkit-line-clamp: 2;
+        -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         cursor: default;
+        margin-block: 10px;
     }
 
     .cardBlogBtn_1 {

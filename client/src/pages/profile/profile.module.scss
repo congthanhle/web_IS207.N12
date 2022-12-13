@@ -4,3 +4,35 @@ h1 {
     margin-block: 4rem;
     font-size: 3rem;
 }
+.form{
+    margin-block: 4rem;
+    h3 {
+        text-align: center;
+        margin-block: 4rem;
+        font-size: 2.5rem;
+    }
+    label {
+        font-size: 1.4rem;
+    }
+
+    input {
+        height: 4.5rem;
+        font-size: 1.6rem;
+    }
+
+
+    button {
+        margin-top: 1.2rem;
+        width: 100%;
+        font-size: 1.6rem;
+        background-color: $main-color;
+        border-color: $light-color;
+        height: 4rem;
+
+        &:hover {
+            background-color: $light-color !important;
+            border-color: $main-color !important;
+            color: $main-color !important;
+        }
+    }
+}

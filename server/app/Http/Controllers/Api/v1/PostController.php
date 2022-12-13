@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Http\Resources\v1\PostCollection;
 use App\Http\Resources\v1\PostResource;
+use Illuminate\Support\Facades\Validator;
+
 
 class PostController extends Controller
 {
@@ -17,9 +19,13 @@ class PostController extends Controller
      */
     public function index()
     {
-        return new PostCollection(Post::all());
+        $product = Post::orderBy('created_at', 'desc')->get();
+        return response()->json($product)->withHeaders(['X-Total-Count' => $product->count()]);
     }
-
+    public function list()
+    {
+        return Post::query()->orderBy('created_at', 'desc')->paginate(9);
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -38,14 +44,36 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'user_id' =>'required',
-            'title' =>'required',
-            'content' =>'required',
-            'thumbnail' =>'required',         
+        $validator = Validator::make($request->all(), [
+            'title' => 'required',
+            'content' => 'required',
+            'user_id' => 'required',
+            'thumbnail' => 'required|image',
         ]);
-        $post = Post::create($request->all());
-       return new PostResource($post);
+        if ($validator->fails()) {
+            return response()->json([$validator], 422);
+        } else {
+            $post = new Post();
+            $post->title = $request->title;
+            $post->content = $request->content;
+            $post->user_id = $request->user_id;
+            if ($request->hasFile('thumbnail')) {
+                $thumbmnail = $request->file('thumbnail');
+                $ext = $thumbmnail->getClientOriginalName();
+                $name = time() . '_' . $ext;
+                $thumbmnail->move('uploads/post/', $name);
+                $post->thumbnail = 'uploads/post/'.$name;
+            } else {
+                $post->thumbnail = 'default.jpg';
+            }
+            $post->save();
+            return response()->json([
+                'status' => 200,
+                'message' => 'Post added successfully!'
+            ]);
+            
+        }
+
     }
 
     /**
@@ -54,9 +82,10 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($post)
+    public function show($id)
     {
-        return new PostResource($post);
+        $post = Post::find($id);
+        return response()->json($post);
     }
 
     /**
@@ -92,5 +121,10 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
+    }
+    public function getAmount()
+    {
+        $post = Post::all();
+        return $post->count();
     }
 }

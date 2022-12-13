@@ -11,7 +11,7 @@ class Slide extends Model
     use HasFactory, SoftDeletes;
     public $timestamp = true;
     protected $fillable = [
-        'name', 'img_link', 'status'
+        'name', 'thumbnail', 'status'
     ];
     protected $primaryKey = 'id';
     protected $table = 'slide';

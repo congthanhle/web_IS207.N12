@@ -26,7 +26,7 @@ class ProductController extends Controller
 
     public function list()
     {
-        return Product::query()->where('quantity', '>', 0)->paginate(16);
+        return Product::query()->paginate(16);
     }
 
     /**
@@ -54,9 +54,7 @@ class ProductController extends Controller
             'description' => 'required',
             'cat_id' => 'required',
             'unit_price' => 'required',
-            'discount_price',
-            'quantity',
-            'thumbnail' => 'required|image|mimes:jpg,png,jpeg|max:2048',
+            'thumbnail' => 'required|image',
         ]);
         if ($validator->fails()) {
             return response()->json([$validator], 422);
@@ -66,9 +64,9 @@ class ProductController extends Controller
             $product->description = $request->description;
             $product->cat_id = $request->cat_id;
             $product->unit_price = $request->unit_price;
-            if ($request->hasFile('thumbmnail')) {
-                $thumbmnail = $request->file('thumbmnail');
-                $ext = $thumbmnail->getClientOriginalExtension();
+            if ($request->hasFile('thumbnail')) {
+                $thumbmnail = $request->file('thumbnail');
+                $ext = $thumbmnail->getClientOriginalName();
                 $name = time() . '_' . $ext;
                 $thumbmnail->move('uploads/product/', $name);
                 $product->thumbnail = 'uploads/product/'.$name;
@@ -82,9 +80,6 @@ class ProductController extends Controller
             ]);
             
         }
-
-        // $product = Product::create($request->all());
-        // return new ProductResource($product);
     }
 
     /**
@@ -149,7 +144,32 @@ class ProductController extends Controller
 
     public function searchCategory($id)
     {
-        $product = Product::join('category', 'cat_id', '=', 'category.id')->where('cat_id', $id)->orWhere('parent_id', $id)->select('product.id', 'product.name', 'unit_price', 'thumbnail', 'discount_price')->get();
+        $product = Product::join('category', 'cat_id', '=', 'category.id')->where('cat_id', $id)->orWhere('parent_id', $id)->select('product.id', 'product.name', 'unit_price', 'thumbnail', 'discount_price', 'quantity')->paginate(16);
         return $product;
+    }
+    public function getProductCategory($id)
+    {
+        $product = Product::join('category', 'cat_id', '=', 'category.id')->where('cat_id', $id)->orWhere('parent_id', $id)->select('product.id', 'product.name', 'unit_price', 'thumbnail', 'discount_price', 'quantity')->get();
+        return $product;
+    }
+    public function getCombo()
+    {
+        $product = Product::join('category', 'cat_id', '=', 'category.id')->where('category.name','=','Combo')->select('product.id', 'product.name', 'unit_price', 'thumbnail', 'discount_price')->get();
+        return $product;
+    }
+
+    public function getComboList()
+    {
+        $product = Product::join('category', 'cat_id', '=', 'category.id')->where('category.name','=','Combo')->select('product.id', 'product.name', 'unit_price', 'thumbnail', 'discount_price')->paginate(4);
+        return $product;
+    }
+    public function getTopSales(){
+        $top_sales = Product::leftJoin('order_detail','product.id','=','order_detail.product_id')
+        ->selectRaw('product.id,product.name,thumbnail, SUM(order_detail.quantity) as total')
+        ->groupBy('product.id','product.name','thumbnail')
+        ->orderBy('total','desc')
+        ->take(10)
+        ->get();
+        return response()->json($top_sales);
     }
 }

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('slide', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('img_link'); 
+            $table->string('thumbnail'); 
             $table->boolean('status')->default(1); 
             $table->softDeletes('deleted_at', $precision = 0);
             $table->timestamps();    

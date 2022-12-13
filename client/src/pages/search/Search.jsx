@@ -8,6 +8,8 @@ import { useLocation } from 'react-router';
 import Products from '../../components/products/Products';
 import Pagination from 'react-js-pagination';
 import styles from './search.module.scss';
+import { URI } from '../../api';
+
 function Collections() {
   const [product, setProduct] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
@@ -16,7 +18,7 @@ function Collections() {
   useEffect(() => {
 
     const getProduct = async () => {
-      const res = await axios.get(`http://127.0.0.1:8000/api/v1/productSearch/?name=${path}&page=${pageNumber}`);
+      const res = await axios.get(`${URI}/productSearch/?name=${path}&page=${pageNumber}`);
       setProduct(res.data);
 
     }
@@ -40,13 +42,16 @@ function Collections() {
       </Row>
       <Row >
         <Col className={styles.pagination}>
-          <Pagination totalItemsCount={10 || total} activePage={current_page} itemsCountPerPage={per_page}
+          <Pagination totalItemsCount={total} activePage={current_page} itemsCountPerPage={per_page}
             onChange={(pageNumber) => setPageNumber(pageNumber)}
-            itemClass='page-item'
-            linkClass='page-link'
+            pageRangeDisplayed={4}
 
+            linkClass={styles.paginationLinkItem}
+            itemClass={styles.paginationItem}
+            activeLinkClass={styles.paginationLinkActive}
+            activeClass={styles.paginationActive}
+            disabledClass={styles.paginationDisabled}
           />
-
         </Col>
       </Row>
 

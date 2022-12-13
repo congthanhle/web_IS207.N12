@@ -10,17 +10,35 @@ import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { Context } from '../../context/Context';
+import { IoMdArrowRoundBack } from 'react-icons/io';
+import { BiEdit } from 'react-icons/bi';
+import { URI, IMG } from '../../api';
+import Form from 'react-bootstrap/Form';
+
 import styles from './profile.module.scss';
 
 
 export default function Profile() {
   const { user, dispatch } = useContext(Context);
-  const [info, setInfo] = useState({});
   const [order, setOrder] = useState([]);
+  const [show, setShow] = useState(false);
+  const [orderItem, setOrderItem] = useState([]);
+  const [update, setUpdate] = useState(false);
+  const [validated, setValidated] = useState(false);
+  const [fullname, setFullname] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+
   useEffect(() => {
     const getProductCart = async () => {
-      const res = await axios.get(`http://127.0.0.1:8000/api/v1/user/${user.user.id}`);
-      setInfo(res.data);
+      const res = await axios.get(`${URI}/user/${user.user.id}`, { headers: { "Authorization": `Bearer ${user.token}` } });
+      setFullname(res.data.fullname);
+      setEmail(res.data.email);
+      setPhoneNumber(res.data.phone_number);
+      setAddress(res.data.address);
     }
     getProductCart();
     const timerId = setTimeout(getProductCart, 100);
@@ -28,7 +46,7 @@ export default function Profile() {
   }, []);
   useEffect(() => {
     const getOrder = async () => {
-      const res = await axios.get(`http://127.0.0.1:8000/api/v1/order/${user.user.id}`);
+      const res = await axios.get(`${URI}/order/user/${user.user.id}`, { headers: { "Authorization": `Bearer ${user.token}` } });
       setOrder(res.data);
     }
     getOrder();
@@ -39,6 +57,33 @@ export default function Profile() {
     dispatch({ type: "LOGOUT" });
     window.location.replace('/');
   };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    if(password && password === passwordConfirmation){
+      try {
+        const res = await axios.put(`${URI}/user/${user.user.id}`, {
+          password
+        },{ headers: {"Authorization" : `Bearer ${user.token}`} });
+      } catch (err) {
+      }
+    }
+    if (form.checkValidity() === true) {
+      e.preventDefault();
+      try {
+        const res = await axios.put(`${URI}/user/${user.user.id}`, {
+          fullname,
+          phone_number: phoneNumber,
+          address
+        },{ headers: {"Authorization" : `Bearer ${user.token}`} });
+        res.config.data && window.location.replace('/');
+      } catch (err) {
+
+      }
+     
+    }
+    setValidated(true);
+  };
   return (
     <Container className="mb-5">
 
@@ -48,75 +93,159 @@ export default function Profile() {
         </Col>
 
       </Row>
-      <Row >
-        <Col lg="4" className='gx-5'>
-          <Card>
-            <ListGroup variant="flush">
-              <ListGroup.Item className='fs-3 my-2'>
-              Thông tin tài khoản              
-              </ListGroup.Item>
-              <ListGroup.Item className='fs-4 my-2'>
-                <div
-                  className="d-flex"
-                >
-                  <p className="mb-4" style={{ fontWeight: "500" }}>Họ tên:</p>
-                  <p className="mb-2 ms-4">{info.fullname}</p>
-                </div>
+      {
+        update ? (
 
-                <div
-                  className="d-flex "
-                >
-                  <p className="mb-4" style={{ fontWeight: "500" }}>Email:</p>
-                  <p className="ms-4">{info.email}</p>
-                </div>
-                <div
-                  className="d-flex"
-                >
-                  <p className="mb-4" style={{ fontWeight: "500" }}>Địa chỉ:</p>
-                  <p className="ms-4">{info.address}</p>
-                </div>
-                <div
-                  className="d-flex"
-                >
-                  <p className="mb-2" style={{ fontWeight: "500" }}>Số điện thoại:</p>
-                  <p className="ms-4">{info.phone_number}</p>
-                </div>
+          <Row className="justify-content-md-center">
+            <Col xs lg="5">
+              <Form onSubmit={handleSubmit} noValidate validated={validated} className={styles.form}>
+                <Form.Group className="mb-5" >
+                  <Form.Control type="text" value={fullname} required onChange={(e) => setFullname(e.target.value)} />
+                  <Form.Control.Feedback type="invalid" className=" fs-5">
+                    Vui lòng điền họ tên
+                  </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group className="mb-5" >
+                  <Form.Control type="text" value={phoneNumber} required onChange={(e) => setPhoneNumber(e.target.value)} />
+                  <Form.Control.Feedback type="invalid" className=" fs-5">
+                    Vui lòng điền số điện thoại
+                  </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group className="mb-5" >
+                  <Form.Control type="text" value={address} required onChange={(e) => setAddress(e.target.value)} />
+                  <Form.Control.Feedback type="invalid" className=" fs-5">
+                    Vui lòng điền địa chỉ
+                  </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group className="mb-5" controlId="formBasicPassword">
+                  <Form.Control type="password" placeholder="Mật khẩu" onChange={(e) => setPassword(e.target.value)} />
+                  
+                </Form.Group>
+                <Form.Group className="mb-5" >
+                  <Form.Control type="password" placeholder="Xác nhận mật khẩu"  onChange={(e) => setPasswordConfirmation(e.target.value)} />
+                  
+                </Form.Group>
+                <Button variant="primary" type="submit">
+                  Cập nhật
+                </Button>
+                <Button variant="primary" onClick={e => setUpdate(false)}>
+                  Quay lại
+                </Button>
+              </Form>
+            </Col>
+          </Row>
+        ) : (
+          <Row >
+            <Col lg="4" className='gx-5'>
+              <Card>
+                <ListGroup variant="flush">
+                  <ListGroup.Item className='fs-3 my-2'>
+                    Thông tin tài khoản <BiEdit className='fs-2 ms-5' style={{ cursor: 'pointer' }} onClick={e => setUpdate(true)} />
+                  </ListGroup.Item>
+                  <ListGroup.Item className='fs-4 my-2'>
+                    <div
+                      className="d-flex"
+                    >
+                      <p className="mb-4" style={{ fontWeight: "500" }}>Họ tên:</p>
+                      <p className="mb-2 ms-4">{fullname}</p>
+                    </div>
 
-              </ListGroup.Item>
+                    <div
+                      className="d-flex "
+                    >
+                      <p className="mb-4" style={{ fontWeight: "500" }}>Email:</p>
+                      <p className="ms-4">{email}</p>
+                    </div>
+                    <div
+                      className="d-flex"
+                    >
+                      <p className="mb-4" style={{ fontWeight: "500" }}>Địa chỉ:</p>
+                      <p className="ms-4">{address}</p>
+                    </div>
+                    <div
+                      className="d-flex"
+                    >
+                      <p className="mb-2" style={{ fontWeight: "500" }}>Số điện thoại:</p>
+                      <p className="ms-4">{phoneNumber}</p>
+                    </div>
 
-            </ListGroup>
-          </Card>
-          <Button onClick={handleLogout} className='mt-3 fs-4' style={{backgroundColor: '#ff781f', border: 'none'}}>Đăng xuất</Button>
-        </Col>
-        <Col >
-          <Table striped bordered hover className='fs-4 ' style={{ height: 100, overflow: 'auto' }}>
-            <thead>
-              <tr>
-                <th>Sản phẩm</th>
-                <th>Ngày đặt</th>
-                <th>Tình trạng</th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                order && order.map((item, index) => {
-                  console.log(item.orderItems);
-                  return (
+                  </ListGroup.Item>
 
-                    <tr key={index}>
-                      <td>{item.id}</td>
-                      <td>{moment(item.created_at).format('DD-MM-YYYY HH:MM')}</td>
-                      <td>{item.status}</td>
+                </ListGroup>
+              </Card>
+              <Button onClick={handleLogout} className='mt-3 fs-4' style={{ backgroundColor: '#ff781f', border: 'none' }}>Đăng xuất</Button>
+            </Col>
+
+            <Col >
+              {show ? (
+                <>
+                  <span className='d-flex align-items-center fs-2 mb-4' onClick={e => setShow(false)} style={{ cursor: 'pointer' }}>
+                    <IoMdArrowRoundBack className='me-4 ' />
+                    <h3>Tất cả đơn hàng</h3>
+                  </span>
+
+                  <Table striped bordered hover className='fs-4 ' style={{ overflow: 'auto' }}>
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>Tên sản phẩm</th>
+                        <th>Đơn giá</th>
+                        <th>Số lượng</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {
+                        orderItem && orderItem.map((item, index) => {
+                          return (
+                            <tr key={index}>
+                              <td><img src={`${IMG}/${item.product.thumbnail}`} alt="" width={90} /></td>
+                              <td>{item.product.name}</td>
+                              <td>{item.unit_price}</td>
+                              <td>{item.quantity}</td>
+                            </tr>
+                          )
+                        }
+                        )
+                      }
+                    </tbody>
+                  </Table>
+                </>
+              )
+                :
+                <Table striped bordered hover className='fs-4 ' style={{ overflow: 'auto' }}>
+                  <thead>
+                    <tr>
+                      <th>Mã đơn hàng</th>
+                      <th>Tổng tiền</th>
+                      <th>Ngày đặt</th>
+                      <th>Tình trạng</th>
                     </tr>
-                  )
-                }
-                )
-              }
-            </tbody>
-          </Table>
+                  </thead>
+                  <tbody>
+                    {
+                      order && order.map((item, index) => {
+                        return (
+                          <tr key={index} onClick={e => { setOrderItem(item.order_items); setShow(true); }}>
+                            <td>{item.id}</td>
+                            <td>{item.total_money}</td>
+                            <td>{moment(item.created_at).format('DD-MM-YYYY HH:MM')}</td>
+                            <td>{item.status}</td>
+                          </tr>
+                        )
+                      }
+                      )
+                    }
+                  </tbody>
+                </Table>
 
-        </Col>
-      </Row>
+              }
+            </Col>
+          </Row>
+
+        )
+
+      }
+
     </Container>
   )
 }

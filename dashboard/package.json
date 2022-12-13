@@ -1,21 +1,31 @@
 {
-  "name": "dashboard",
+  "name": "",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
-    "@mui/material": "^5.10.12",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
+    "@ckeditor/ckeditor5-build-decoupled-document": "^35.3.2",
+    "@ckeditor/ckeditor5-core": "^35.3.1",
+    "@ckeditor/ckeditor5-image": "^35.3.2",
+    "@ckeditor/ckeditor5-react": "^5.0.2",
+    "@emotion/react": "^11.8.1",
+    "@emotion/styled": "^11.8.1",
+    "@mui/icons-material": "^5.4.4",
+    "@mui/material": "^5.4.4",
+    "@mui/x-data-grid": "^5.5.1",
+    "@testing-library/jest-dom": "^5.16.2",
+    "@testing-library/react": "^12.1.3",
     "@testing-library/user-event": "^13.5.0",
-    "ra-data-json-server": "^4.4.4",
-    "ra-input-rich-text": "^4.5.0",
-    "react": "^18.2.0",
-    "react-admin": "^4.4.4",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.4.3",
-    "react-scripts": "^5.0.1",
+    "axios": "^1.1.3",
+    "ckeditor5-build-classic": "^1.0.0",
+    "ckeditor5-custom-build": "^0.0.6",
+    "moment": "^2.29.4",
+    "react": "^17.0.2",
+    "react-circular-progressbar": "^2.0.4",
+    "react-dom": "^17.0.2",
+    "react-router-dom": "^6.2.2",
+    "react-scripts": "5.0.0",
+    "recharts": "^2.1.9",
+    "sass": "^1.49.9",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -24,7 +34,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://127.0.0.1:8000/api/v1/",
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -42,8 +51,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "sass": "^1.56.0"
   }
 }

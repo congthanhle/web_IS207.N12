@@ -19,6 +19,7 @@ class CategoryController extends Controller
     {
         $cat = Category::all();
         return response()->json($cat)->withHeaders(['X-Total-Count' => $cat->count()]);
+        
     }
 
     /**
@@ -40,22 +41,21 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         
-        // $request->validate([
-        //     'name' =>'required',
-        //     'parent_id',
-        //     'cat_code',
-        //     'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        // ]);
+        $request->validate([
+            'name' =>'required',
+            'parent_id',
+            'cat_code',
+        ]);
        
-            $cat = new Category();
-            $cat->name = $request->name;
-            $cat->parent_id = $request->parent_id;
-            $cat->cat_code = $request->cat_code;
-            $file = $request->file('image.rawFile');
-            $ext = $file->getClientOriginalExtension();
-            $name = time() . '_' . $ext;
-            $file->move('uploads/product/', $name);
-            $cat->thumbnail = $name;
+            // $cat = new Category();
+            // $cat->name = $request->name;
+            // $cat->parent_id = $request->parent_id;
+            // $cat->cat_code = $request->cat_code;
+            // $file = $request->file('image.rawFile');
+            // $ext = $file->getClientOriginalExtension();
+            // $name = time() . '_' . $ext;
+            // $file->move('uploads/product/', $name);
+            // $cat->thumbnail = $name;
             // return response()->json([
             //     'status' => 200,
             //     'message' => 'Category added successfully'
@@ -78,7 +78,7 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        $cat = Category::find($id);
+        $cat = Category::with('children')->find($id);
         return response()->json($cat);
     }
 
@@ -119,14 +119,14 @@ class CategoryController extends Controller
         $cat->delete();
     }
 
-     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  str $name
-     * @return \Illuminate\Http\Response
-     */
-    public function search($name)
-    {
-        return Category::where('name','like','%'.$name.'%')->get();
-    }
+    //  /**
+    //  * Remove the specified resource from storage.
+    //  *
+    //  * @param  str $name
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function search($name)
+    // {
+    //     return Category::where('name','like','%'.$name.'%')->get();
+    // }
 }

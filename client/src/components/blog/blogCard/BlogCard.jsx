@@ -2,21 +2,20 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import styles from './blogCard.module.scss';
+import {IMG} from '../../../api';
 
 export default function BlogCard(props) {
-    const { btn } = props;
+    const { btn, title, content, thumbnail, id} = props;
     return (
         <Card className={styles.card}>
-            <Card.Img variant="top" src="https://theme.hstatic.net/200000309869/1000702189/14/img_home_list_icon_1.png?v=256" />
+            <Card.Img variant="top" src={`${IMG}/${thumbnail}`} />
             <Card.Body>
-                <Card.Title className={styles.cardTitle}>WORKSHOP: "Rang sao cho đúng?"</Card.Title>
-                <Card.Text className={styles.cardBlogDesc}>
-                    With supporting text below as a natural lead-in to additional content.With supporting text below as a natural lead-in to additional content.
-                </Card.Text>
+                <Card.Title className={styles.cardTitle}>{title}</Card.Title>
+                <div className={styles.cardBlogDesc} dangerouslySetInnerHTML={{ __html: content}}></div>
                 {
                     !btn ?
-                        <Card.Link href="#" className={styles.cardBlogBtn_1}>Xem thêm</Card.Link> :
-                        <Button size="lg" className={styles.cardBlogBtn_2}>
+                        <Card.Link href={`/blog/${id}`} className={styles.cardBlogBtn_1}>Xem thêm</Card.Link> :
+                        <Button size="lg" className={styles.cardBlogBtn_2} onClick={e => window.location.replace(`/blog/${id}`)}>
                             Đọc thêm
                         </Button>
                 }
