@@ -20,6 +20,7 @@ class OrderController extends Controller
      */
     public function index()
     {
+        $this->authorize('staff-admin');
         $order = Order::all();
         return response()->json($order)->withHeaders(['X-Total-Count' => $order->count()]);
     }
@@ -116,6 +117,7 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
+        $this->authorize('staff-admin');
         $order->update($request->all());
         return new OrderResource($order);
     }
@@ -138,16 +140,19 @@ class OrderController extends Controller
     }
     public function getAmount()
     {
+        $this->authorize('staff-admin');
         $order = Order::all();
         return $order->count();
     }
     public function getRevenueToday()
     {
+        $this->authorize('staff-admin');
         $today = Order::where(Order::raw('date(created_at)'), '>=', Order::raw('date(CURDATE())'))->sum('total_money');
         return $today;
     }
 
     public function getRevenueMonthly(){
+        $this->authorize('staff-admin');
         return Order::select(
             Order::raw('year(created_at) as year'),
             Order::raw('month(created_at) as name'),

@@ -40,7 +40,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $this->authorize('admin');
         $request->validate([
             'name' =>'required',
             'parent_id',
@@ -102,7 +102,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-         
+        $this->authorize('admin');
         $cat = Category::find($id);
         $cat->update($request->all());
         return  response()->json($cat);
@@ -116,17 +116,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $cat)
     {
+        $this->authorize('admin');
         $cat->delete();
     }
-
-    //  /**
-    //  * Remove the specified resource from storage.
-    //  *
-    //  * @param  str $name
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function search($name)
-    // {
-    //     return Category::where('name','like','%'.$name.'%')->get();
-    // }
 }

@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Models\Feedback;
 use Illuminate\Http\Request;
-use App\Http\Resources\v1\FeedbackResource;
 
-class FeedbackController extends Controller
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +14,7 @@ class FeedbackController extends Controller
      */
     public function index()
     {
-        $this->authorize('staff-admin');
-        $feedback = Feedback::all();
-        return response()->json($feedback)->withHeaders(['X-Total-Count' => $feedback->count()]);
+        //
     }
 
     /**
@@ -39,15 +35,9 @@ class FeedbackController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'username' => 'required',
-            'email' => 'required',
-            'phone_number' => 'required',
-            'content' => 'required',
-        ]);
-        $feedback= Feedback::create($request->all());
-        return new FeedbackResource($feedback);
+        //
     }
+
     /**
      * Display the specified resource.
      *
@@ -56,9 +46,7 @@ class FeedbackController extends Controller
      */
     public function show($id)
     {
-        $this->authorize('staff-admin');
-        $feedback = Feedback::find($id);
-        return response()->json($feedback);
+        //
     }
 
     /**
@@ -90,10 +78,8 @@ class FeedbackController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Feedback $feedback)
+    public function destroy($id)
     {
-        $this->authorize('staff-admin');
-        $feedback->delete();
+        //
     }
-    
 }

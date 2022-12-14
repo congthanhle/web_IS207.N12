@@ -71,6 +71,39 @@ class AuthController extends Controller
             }
         }
     }
+    public function loginAdmin(Request $request)
+    {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'email' => 'required|string',
+                'password' => 'required|string'
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'error' => $validator->errors()->first()
+            ], 422);
+        } else {
+            $user = User::where('email', $request->email)->first();
+            
+            if (!$user || $user->role_id === 1 || !Hash::check($request->password, $user->password)) {
+                return response()->json([
+                    'message' => 'Bạn không có quyền truy cập vào trang web này!',
+                    'status' => 401
+                ],401);
+            } else {
+                $token = $user->createToken($user->email . '_Token')->plainTextToken;
+                return response()->json([
+                    'user' => $user,
+                    'token' => $token,
+                    'status' => 201,
+                    'message' => ''
+                ], 201);
+            }
+        }
+    }
 
     public function logout(Request $request)
     {

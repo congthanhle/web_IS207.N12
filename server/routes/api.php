@@ -36,6 +36,7 @@ use App\Http\Controllers\ImageController;
 Route::prefix('v1')->group(function () {
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
+    Route::post('loginAdmin', [AuthController::class, 'loginAdmin']);
     Route::post('test', [AuthController::class, 'getPassword']);
     Route::group(['middleware' => 'cors'], function () {
         Route::get('/post/list', [PostController::class, 'list']);

@@ -16,7 +16,7 @@ class User extends Model
     public $timestamp = true;
     
     protected $fillable = [
-        'fullname', 'email', 'phone_number', 'address','password', 'isAdmin',
+        'fullname', 'email', 'phone_number', 'address','password', 'role_id'
     ];
     protected $hidden = [
         'password',
@@ -24,6 +24,9 @@ class User extends Model
     ];
     protected $primaryKey = 'id';
     protected $table = 'user';
+    public function role(){
+        return $this->belongsTo(Role::class);
+    }
     public function order(): HasMany
     {
         return $this->hasMany(Order::class, 'user_id', 'id');

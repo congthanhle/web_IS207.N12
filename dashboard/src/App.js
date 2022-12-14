@@ -30,7 +30,7 @@ function App() {
         <Routes>
         <Route path="/login" element={<Login />} />
           {
-            (!user || !user.user.isAdmin) ? (<Route path="*" element={<Navigate to="/login" replace />}/>) : 
+            (!user || user.user.role_id === 1) ? (<Route path="*" element={<Navigate to="/login" replace />}/>) : 
             (<Route path="/">
               <Route index element={<Home />} />
               <Route path="users">
@@ -38,7 +38,7 @@ function App() {
                 <Route path=":userId" element={<SingleUser />} />
                 <Route
                   path="new"
-                // element={<New inputs={userInputs} title="Add New User" />}
+        
                 />
               </Route>
               <Route path="products">

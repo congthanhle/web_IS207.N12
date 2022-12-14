@@ -4,7 +4,7 @@ import { categoryColumns } from "../../dataTable/dataCategory";
 import { Link } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import axios from 'axios';
-import {URI} from '../../api';
+import { URI } from '../../api';
 import { Context } from '../../context/Context';
 
 
@@ -25,11 +25,11 @@ const Datatable = () => {
   }, []);
 
   const handleDelete = async (id) => {
-    try{
-      const res = await axios.delete(`${URI}/category/${id}`,{ headers: {"Authorization" : `Bearer ${user.token}`} })
+    try {
+      const res = await axios.delete(`${URI}/category/${id}`, { headers: { "Authorization": `Bearer ${user.token}` } })
       setCategories(categories.filter((item) => item.id !== id));
-  }catch(err){}
-    
+    } catch (err) { }
+
   };
 
   const actionColumn = [
@@ -43,15 +43,20 @@ const Datatable = () => {
             <Link to={`/categories/${params.row.id}`} style={{ textDecoration: "none" }}>
               <div className="viewButton">View</div>
             </Link>
-             <Link to={`/categories/update/${params.row.id}`} style={{ textDecoration: "none" }}>
-              <div className="editButton">Edit</div>
-            </Link>
-            <div
-              className="deleteButton"
-              onClick={() => handleDelete(params.row.id)}
-            >
-              Delete
-            </div>
+            {
+              user.user.role_id === 2 && <>
+                <Link to={`/categories/update/${params.row.id}`} style={{ textDecoration: "none" }}>
+                  <div className="editButton">Edit</div>
+                </Link>
+                <div
+                  className="deleteButton"
+                  onClick={() => handleDelete(params.row.id)}
+                >
+                  Delete
+                </div>
+              </>
+            }
+
           </div>
         );
       },
@@ -61,11 +66,14 @@ const Datatable = () => {
     <div className="datatable">
       <div className="datatableTitle">
         Categories
-        <Link to="/categories/new" className="link">
-          Add New
-        </Link>
+        {
+          user.user.role_id === 2 && <Link to="/categories/new" className="link">
+            Add New
+          </Link>
+        }
+
       </div>
-      
+
       <DataGrid
         className="datagrid"
         rows={categories}

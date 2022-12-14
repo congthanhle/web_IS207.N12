@@ -15,13 +15,13 @@ const New = ({ inputs, title }) => {
     const [parentId, setParentId] = useState(null);
     const [catCode, setCatCode] = useState("");
     const [cat, setCat] = useState([]);
-  const { user } = useContext(Context);
+    const { user } = useContext(Context);
 
 
     useEffect(() => {
         const getCat = async () => {
             const res = await axios.get(`${URI}/category`);
-            setCat(res.data);
+            setCat(res.data.filter(item => item.parent_id === null));
         }
         getCat();
         const timerId = setTimeout(getCat, 200);

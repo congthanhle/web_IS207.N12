@@ -4,21 +4,24 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useLocation } from 'react-router';
 import axios from 'axios';
 import { URI, IMG } from '../../api';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { Context } from '../../context/Context';
+
 
 export default function SingleCategory() {
     const [products, setProducts] = useState([]);
     const location = useLocation();
     const path = location.pathname.split("/")[2];
+    const { user } = useContext(Context);
+
     useEffect(() => {
         const fetchProducts = async () => {
             const res = await axios.get(`${URI}/product/getCat/${path}`);
@@ -51,14 +54,14 @@ export default function SingleCategory() {
                             <Grid item xs={3} key={item.id}>
                                 <Card sx={{ maxWidth: 300 }}>
                                     {
-                                        item.thumbnail &&  <CardMedia
-                                        component="img"
-                                        alt="green iguana"
-                                        height="250"
-                                        image={`${IMG}/${item.thumbnail}`}
-                                    />
+                                        item.thumbnail && <CardMedia
+                                            component="img"
+                                            alt="green iguana"
+                                            height="250"
+                                            image={`${IMG}/${item.thumbnail}`}
+                                        />
                                     }
-                                   
+
                                     <CardContent>
                                         <Typography gutterBottom variant="h7" component="div">
                                             {item.name}
@@ -71,18 +74,44 @@ export default function SingleCategory() {
                                         <Link to={`/products/${item.id}`} style={{ textDecoration: "none" }}>
                                             <VisibilityIcon style={{ color: '#ff781f', marginRight: '20px' }} />
                                         </Link>
-                                        <Link to={`/products/update/${item.id}`} style={{ textDecoration: "none" }}>
-                                            <EditIcon style={{ color: '#ff781f', marginRight: '20px' }} />
-                                        </Link>
-                                        <div
-                                            style={{ color: '#ff781f' }}
-                                            onClick={() => handleDelete(item.id)}
-                                            className="button"
+                                        {
 
-                                        >
-                                            <DeleteOutlineIcon />
-                                        </div>
+                                            user.user.role_id === 2 && <>
+
+                                                <Link to={`/products/update/${item.id}`} style={{ textDecoration: "none" }}>
+                                                    <EditIcon style={{ color: '#ff781f', marginRight: '20px' }} />
+                                                </Link>
+                                                <div
+                                                    style={{ color: '#ff781f' }}
+                                                    onClick={() => handleDelete(item.id)}
+                                                    className="button"
+
+                                                >
+                                                    <DeleteOutlineIcon />
+                                                </div>
+                                            </>
+                                        }
                                     </CardActions>
+                                    
+                                    {
+                                        user.user.role_id === 2 && <CardActions>
+                                            <Link to={`/products/${item.id}`} style={{ textDecoration: "none" }}>
+                                                <VisibilityIcon style={{ color: '#ff781f', marginRight: '20px' }} />
+                                            </Link>
+                                            <Link to={`/products/update/${item.id}`} style={{ textDecoration: "none" }}>
+                                                <EditIcon style={{ color: '#ff781f', marginRight: '20px' }} />
+                                            </Link>
+                                            <div
+                                                style={{ color: '#ff781f' }}
+                                                onClick={() => handleDelete(item.id)}
+                                                className="button"
+
+                                            >
+                                                <DeleteOutlineIcon />
+                                            </div>
+                                        </CardActions>
+                                    }
+
                                 </Card>
                             </Grid>
                         )))

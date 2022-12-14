@@ -44,6 +44,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('staff-admin');
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'content' => 'required',
@@ -108,6 +109,7 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        $this->authorize('staff-admin');
         $post->update($request->all());
         return new PostResource($post);
     }
@@ -120,6 +122,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        $this->authorize('staff-admin');
         $post->delete();
     }
     public function getAmount()

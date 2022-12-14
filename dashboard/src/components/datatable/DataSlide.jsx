@@ -16,7 +16,7 @@ import { Context } from '../../context/Context';
 
 export default function DataSlide() {
     const [slides, setSlides] = useState([]);
-  const { user } = useContext(Context);
+    const { user } = useContext(Context);
 
     useEffect(() => {
         const fetchSlides = async () => {
@@ -30,7 +30,7 @@ export default function DataSlide() {
 
     const handleDelete = async (id) => {
         try {
-            const res = await axios.delete(`${URI}/slide/${id}`,{ headers: {"Authorization" : `Bearer ${user.token}`} })
+            const res = await axios.delete(`${URI}/slide/${id}`, { headers: { "Authorization": `Bearer ${user.token}` } })
             setSlides(slides.filter((item) => item.id !== id));
         } catch (err) { }
 
@@ -39,16 +39,19 @@ export default function DataSlide() {
         try {
             await axios.put(`${URI}/slide/${id}`, {
                 status: !status
-            },{ headers: {"Authorization" : `Bearer ${user.token}`} })
+            }, { headers: { "Authorization": `Bearer ${user.token}` } })
         } catch (err) { }
     }
     return (
         <div className="datatable">
             <div className="datatableTitle">
                 Slides
-                <Link to="/slides/new" className="link">
-                    Add New
-                </Link>
+                {
+                    user.user.role_id === 2 && <Link to="/slides/new" className="link">
+                        Add New
+                    </Link>
+                }
+
             </div>
             <div>
                 <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
@@ -67,18 +70,22 @@ export default function DataSlide() {
                                             {item.name}
                                         </Typography>
                                     </CardContent>
-                                    <CardActions>
+                                    {
+                                        user.user.role_id === 2 && <CardActions>
 
-                                        <Switch color="warning" checked={item.status === 1 ? true : false}  onChange={() => handleUpdate(item.id, item.status)}/>
+                                            <Switch color="warning" checked={item.status === 1 ? true : false} onChange={() => handleUpdate(item.id, item.status)} />
 
-                                        <div
-                                            style={{ color: 'red' }}
-                                            onClick={() => handleDelete(item.id)}
-                                            className="button"
-                                        >
-                                            Delete
-                                        </div>
-                                    </CardActions>
+                                            <div
+                                                style={{ color: 'red' }}
+                                                onClick={() => handleDelete(item.id)}
+                                                className="button"
+                                            >
+                                                Delete
+                                            </div>
+                                        </CardActions>
+
+                                    }
+
                                 </Card>
                             </Grid>
                         )))

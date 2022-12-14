@@ -19,6 +19,7 @@ class UserController extends Controller
      */
     public function index()
     {
+        $this->authorize('staff-admin');
         $user = User::all();
         return response()->json($user)->withHeaders(['X-Total-Count' => $user->count()]);
     }
@@ -115,11 +116,13 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        $this->authorize('admin');
         $user->delete();
     }
     public function getAmount()
     {
-        $user = User::where('isAdmin', 0)->get();
+        $this->authorize('staff-admin');
+        $user = User::where('role_id', 1)->get();
         return $user->count();
     }
 }

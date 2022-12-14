@@ -39,6 +39,7 @@ class SlideController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('access');
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'thumbnail' => 'required|image',
@@ -97,6 +98,7 @@ class SlideController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('admin');
         $slide = Slide::find($id);
         $slide->update($request->all());
         return  response()->json($slide);
@@ -110,6 +112,7 @@ class SlideController extends Controller
      */
     public function destroy(Slide $slide)
     {
+        $this->authorize('admin');
         $slide->delete();
     }
 }

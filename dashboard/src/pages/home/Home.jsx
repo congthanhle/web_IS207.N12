@@ -32,7 +32,7 @@ const Home = () => {
           <Widget type="revenue" />
         </div>
         <div className="charts">
-          <Chart title="Last 12 Months (Revenue)" aspect={4 / 1} />
+          <Chart title="Last 12 Months (Revenue)" aspect={3 / 1} />
         </div>
         <div className="listContainer">
           <div className="listTitle">Các sản phẩm bán chạy</div>

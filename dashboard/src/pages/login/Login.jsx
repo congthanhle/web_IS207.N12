@@ -22,11 +22,12 @@ const Login = () => {
     e.preventDefault();
     dispatch({ type: "LOGIN_START" });
     try {     
-      const res = await axios.post(`${URI}/login`, {
+      const res = await axios.post(`${URI}/loginAdmin`, {
         email,
         password,
       });
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+      console.error(res.data);
       res.data && window.location.replace('/');
     } catch (err) {
       dispatch({ type: "LOGIN_FAILURE" });

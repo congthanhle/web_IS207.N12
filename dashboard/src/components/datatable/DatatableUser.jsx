@@ -1,11 +1,11 @@
 import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
-import { userColumns} from "../../dataTable/dataUser";
+import { userColumns } from "../../dataTable/dataUser";
 import { Link } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import axios from 'axios';
 import { Context } from '../../context/Context';
-import {URI} from '../../api';
+import { URI } from '../../api';
 
 const Datatable = () => {
   const [users, setUsers] = useState([]);
@@ -13,8 +13,8 @@ const Datatable = () => {
   const { user } = useContext(Context);
   useEffect(() => {
     const fetchProducts = async () => {
-      const res = await axios.get(`${URI}/user`,{ headers: {"Authorization" : `Bearer ${user.token}`} });
-      setUsers(res.data);
+      const res = await axios.get(`${URI}/user`, { headers: { "Authorization": `Bearer ${user.token}` } });
+      setUsers(res.data.filter(item => item.id !== user.user.id));
       setLoading(false);
     }
     fetchProducts();
@@ -23,11 +23,11 @@ const Datatable = () => {
   }, []);
 
   const handleDelete = async (id) => {
-    try{
-      const res = await axios.delete(`${URI}/user/${id}`,{ headers: {"Authorization" : `Bearer ${user.token}`} })
+    try {
+      const res = await axios.delete(`${URI}/user/${id}`, { headers: { "Authorization": `Bearer ${user.token}` } })
       setUsers(users.filter((item) => item.id !== id));
-  }catch(err){}
-    
+    } catch (err) { }
+
   };
 
   const actionColumn = [
@@ -37,16 +37,20 @@ const Datatable = () => {
       width: 200,
       renderCell: (params) => {
         return (
+
           <div className="cellAction">
             <Link to={`/users/${params.row.id}`} style={{ textDecoration: "none" }}>
               <div className="viewButton">View</div>
             </Link>
-            <div
-              className="deleteButton"
-              onClick={() => handleDelete(params.row.id)}
-            >
-              Delete
-            </div>
+            {
+              user.user.role_id === 2 && <div
+                className="deleteButton"
+                onClick={() => handleDelete(params.row.id)}
+              >
+                Delete
+              </div>
+            }
+
           </div>
         );
       },
@@ -56,12 +60,9 @@ const Datatable = () => {
     <div className="datatable">
       <div className="datatableTitle">
         Users
-        <Link to="/users/new" className="link">
-          Add New
-        </Link>
       </div>
       <DataGrid
-      loading={loading}
+        loading={loading}
         className="datagrid"
         rows={users}
         columns={userColumns.concat(actionColumn)}

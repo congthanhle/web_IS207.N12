@@ -4,7 +4,7 @@ import { productColumns } from "../../dataTable/dataProduct";
 import { Link } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import axios from 'axios';
-import {URI, IMG} from '../../api'
+import { URI, IMG } from '../../api'
 import { Context } from '../../context/Context';
 
 const Datatable = () => {
@@ -25,11 +25,11 @@ const Datatable = () => {
   }, []);
 
   const handleDelete = async (id) => {
-    try{
-      const res = await axios.delete(`${URI}/product/${id}`,{ headers: {"Authorization" : `Bearer ${user.token}`} })
+    try {
+      const res = await axios.delete(`${URI}/product/${id}`, { headers: { "Authorization": `Bearer ${user.token}` } })
       setProducts(products.filter((item) => item.id !== id));
-  }catch(err){}
-    
+    } catch (err) { }
+
   };
 
   const actionColumn = [
@@ -43,15 +43,20 @@ const Datatable = () => {
             <Link to={`/products/${params.row.id}`} style={{ textDecoration: "none" }}>
               <div className="viewButton">Show</div>
             </Link>
-            <Link to={`/products/update/${params.row.id}`} style={{ textDecoration: "none" }}>
-              <div className="editButton">Edit</div>
-            </Link>
-            <div
-              className="deleteButton"
-              onClick={() => handleDelete(params.row.id)}
-            >
-              Delete
-            </div>
+            {
+              user.user.role_id === 2 && <>
+                <Link to={`/products/update/${params.row.id}`} style={{ textDecoration: "none" }}>
+                  <div className="editButton">Edit</div>
+                </Link>
+                <div
+                  className="deleteButton"
+                  onClick={() => handleDelete(params.row.id)}
+                >
+                  Delete
+                </div>
+              </>
+            }
+
           </div>
         );
       },
@@ -61,9 +66,12 @@ const Datatable = () => {
     <div className="datatable">
       <div className="datatableTitle">
         Products
-        <Link to="/products/new" className="link">
-          Add New
-        </Link>
+        {
+          user.user.role_id === 2 && <Link to="/products/new" className="link">
+            Add New
+          </Link>
+        }
+
       </div>
       <DataGrid
         className="datagrid"
