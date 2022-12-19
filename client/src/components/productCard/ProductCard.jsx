@@ -10,26 +10,42 @@ import styles from './productCard.module.scss';
 import { URI, IMG } from '../../api';
 import Swal from 'sweetalert2';
 
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 1100,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    },
+  })
 export default function ProductCard({ product }) {
     const [showBtn, setShowBtn] = useState(false);
     const { user } = useContext(Context);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const newProduct = {
-            user_id: user.user.id,
-            product_id: product.id,
-            quantity: 1,
-        };
-
-        try {
-            const res = await axios.post(`${URI}/cart`, newProduct,{ headers: {"Authorization" : `Bearer ${user.token}`} });
-            res.data && Swal.fire(
-                '',
-                'Thêm sản phẩm thành công',
-                'success'
-            )
-        } catch (e) { }
+        if(user){
+            const newProduct = {
+                user_id: user.user.id,
+                product_id: product.id,
+                quantity: 1,
+            };
+    
+            try {
+                const res = await axios.post(`${URI}/cart`, newProduct,{ headers: {"Authorization" : `Bearer ${user.token}`} });
+                res && Toast.fire({
+                    icon: 'success',
+                    title: 'Thêm vào giỏ hàng thành công'
+                  })
+            } catch (e) { }
+        }
+        else{
+              window.location.replace('/login');
+        }
+        
     }
     const handleShow = (proId) => {
         window.location.replace(`/product/${proId}`);

@@ -46,9 +46,9 @@ const Widget = ({ type }) => {
   }, []);
  
   switch (type) {
-    case "user":
+    case "customer":
       data = {
-        title: "USERS",
+        title: "CUSTOMERS",
         isMoney: false,
         link: "/users",
         label_link: "See all users",

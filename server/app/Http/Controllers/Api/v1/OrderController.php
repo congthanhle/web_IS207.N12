@@ -117,7 +117,6 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        $this->authorize('staff-admin');
         $order->update($request->all());
         return new OrderResource($order);
     }
@@ -163,5 +162,17 @@ class OrderController extends Controller
             ->groupBy('name')
             ->get()
             ->toArray();
+    }
+    public function cancelOrder($id){
+        $order = Order::with('orderItems')->find($id);
+        $order->status = "Đã hủy";
+        $order->save();
+        $products = $order->orderItems()->get();
+        foreach($products as $item){
+            $item->product->update([
+                'quantity' => $item->product->quantity + $item->quantity
+            ]);
+        }
+        return response()->json($order);
     }
 }

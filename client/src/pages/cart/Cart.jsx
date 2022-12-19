@@ -17,6 +17,7 @@ import styles from './cart.module.scss';
 import { URI, IMG } from '../../api';
 import { Link } from 'react-router-dom';
 import Spinner from 'react-bootstrap/Spinner';
+import Swal from 'sweetalert2';
 
 
 
@@ -61,8 +62,13 @@ export default function Cart() {
 
   const handleDelete = (e, cart_id) => {
     e.preventDefault();
-    axios.delete(`${URI}/cart/${cart_id}`)
-
+    const res = axios.delete(`${URI}/cart/${cart_id}`, { headers: { "Authorization": `Bearer ${user.token}` } })
+      res && Swal.fire({
+      title: 'Xóa thành công',
+      timer: 1000,
+      icon: 'error',
+      showConfirmButton: false
+  },)
     setProductCart(productCart => productCart.filter(el => el.id !== cart_id))
 
   }
@@ -143,7 +149,7 @@ export default function Cart() {
                     <Card className="d-flex align-items-center justify-content-center" style={{ marginBottom: '14vh' }}>
                       <Card.Title className='fs-3 my-5'>Bạn không có sản phẩm nào trong giỏ hàng</Card.Title>
                       <Card.Body className='mb-5'>
-                        <Link to="/collections/all">
+                        <Link to="/collections">
                           <BsCartPlusFill style={{ fontSize: '50px', color: 'black' }} />
                         </Link>
                       </Card.Body>

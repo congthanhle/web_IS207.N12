@@ -88,7 +88,7 @@ const EditPost = ({ tit }) => {
                             </div>
 
 
-                            <button className="sendBtn">Update</button>
+                            <button className="sendBtn">Cập nhật</button>
                         </form>
                     </div>
                 </div>

@@ -11,6 +11,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
 import { Context } from '../../context/Context';
+import { margin } from "@mui/system";
 
 
 const Single = () => {
@@ -20,11 +21,11 @@ const Single = () => {
     const [order, setOrder] = useState({});
     const [status, setStatus] = useState("");
     const [orderDetails, setOrderDetails] = useState([]);
-    const { user} = useContext(Context);
+    const { user } = useContext(Context);
 
     useEffect(() => {
         const getOrder = async () => {
-            const res = await axios.get(`${URI}/order/${path}`,{ headers: {"Authorization" : `Bearer ${user.token}`} });
+            const res = await axios.get(`${URI}/order/${path}`, { headers: { "Authorization": `Bearer ${user.token}` } });
             setOrder(res.data);
             setUser_1(res.data.users);
             setStatus(res.data.status)
@@ -36,13 +37,23 @@ const Single = () => {
     }, [path]);
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         const data = {
             status
         }
         try {
-             const res= await axios.put(`${URI}/order/${path}`, data,{ headers: {"Authorization" : `Bearer ${user.token}`} });
+            const res = await axios.put(`${URI}/order/${path}`, data, { headers: { "Authorization": `Bearer ${user.token}` } });
             res.data && window.location.replace('/orders');
-        } catch (e) {}
+        } catch (e) { }
+    }
+    const handleCancel = (e) => {
+        e.preventDefault();
+
+        try {
+            const res = axios.get(`${URI}/cancelOrder/${order.id}`, { headers: { "Authorization": `Bearer ${user.token}` } });
+            res && window.location.replace('/orders')
+        } catch (err) {
+        }
     }
     return (
         <div className="single">
@@ -87,6 +98,7 @@ const Single = () => {
                     </div>
                     <div className="right">
                         <h2 className="title">Trạng thái đơn hàng</h2>
+
                         <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
@@ -94,19 +106,34 @@ const Single = () => {
                             label="Danh mục gốc"
                             sx={{ minWidth: '100%', mb: 3 }}
                             onChange={(e) => setStatus(e.target.value)}
+                            disabled={status === "Đã hủy" && true}
                         >
                             <MenuItem value="Chờ xác nhận">Chờ xác nhận</MenuItem>
                             <MenuItem value="Đang giao hàng">Đang giao hàng</MenuItem>
                             <MenuItem value="Giao hàng thành công">Giao hàng thành công</MenuItem>
+                            {
+                                status === "Đã hủy" && <MenuItem value="Đã hủy">Đã hủy</MenuItem>
+                            }
+
                         </Select>
-                        <Button variant="contained" sx={{ color: 'white', backgroundColor: '#ff781f' }} onClick={handleSubmit}>
-                            Cập nhật
-                        </Button>
+                        {
+                            (status === "Chờ xác nhận" && status !== "") &&
+                            <>
+                                <Button variant="contained" sx={{ color: 'white', backgroundColor: '#ff781f', marginRight: '20px' }} onClick={handleSubmit}>
+                                    Cập nhật
+                                </Button>
+
+                                <Button variant="contained" sx={{ color: 'white', backgroundColor: '#ff781f' }} onClick={handleCancel}>
+                                    Hủy đơn
+                                </Button>
+                            </>
+                        }
+
                     </div>
                 </div>
                 <div className="bottom">
                     <h1 className="title">Chi tiết đơn hàng</h1>
-                    
+
                     <List item={orderDetails} />
                 </div>
             </div>

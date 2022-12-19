@@ -60,7 +60,7 @@ const New = ({ inputs, title }) => {
               </div>
               <div className="formInput" >
                 <label htmlFor="name">
-                  Tên sản phẩm
+                  Tên slide
                 </label>
                 <Input data={name} setData={setName} />
               </div>

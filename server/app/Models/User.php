@@ -24,8 +24,9 @@ class User extends Model
     ];
     protected $primaryKey = 'id';
     protected $table = 'user';
+    protected $with = ['role'];
     public function role(){
-        return $this->belongsTo(Role::class);
+        return $this->belongsTo(Role::class, 'role_id', 'id');
     }
     public function order(): HasMany
     {

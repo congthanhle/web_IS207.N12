@@ -16,9 +16,16 @@ export const userColumns = [
     width: 120,
   },
   {
-    field: "address",
-    headerName: "Địa chỉ",
+    field: "role_id",
+    headerName: "Chức năng",
     width: 200,
+    renderCell: (params) => {
+      return (
+        <div >
+            {`${params.row.role.name} (${params.row.role_id})`}
+        </div>
+      );
+    },
   },
 ];
 

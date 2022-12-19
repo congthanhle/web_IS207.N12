@@ -1,18 +1,20 @@
 import "./single.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
-import Chart from "../../components/chart/Chart";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useLocation } from 'react-router';
 import axios from 'axios';
 import {URI, IMG} from '../../api';
+import { Context } from '../../context/Context';
+
 
 const SingleProduct = () => {
     const location = useLocation();
     const path = location.pathname.split("/")[2];
     const [product,setProduct] = useState({});
     const [cat, setCat] = useState("");
+    const [quantity, setQuantity] = useState(0);
+    const { user } = useContext(Context);
 
     useEffect(() => {
         const getPost = async () => {
@@ -25,6 +27,18 @@ const SingleProduct = () => {
         const timerId = setTimeout(getPost, 200);
         return () => clearTimeout(timerId);
     }, [path]);
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      const num = parseInt(product.quantity) + parseInt(quantity);
+
+      const data = {
+         quantity: num
+      }
+      try {
+          const res = await axios.put(`${URI}/product/${path}`, data,{ headers: {"Authorization" : `Bearer ${user.token}`} });
+          res.data && window.location.replace('/products');
+      } catch (e) { }
+  }
   return (
     <div className="single">
       <Sidebar />
@@ -55,6 +69,13 @@ const SingleProduct = () => {
                 <div className="detailItem">
                   <span className="itemKey">Số lượng:</span>
                   <span className="itemValue">{product.quantity}</span>
+                </div>
+                <div className="detailItem">
+                <span className="itemKey">Thêm số lượng:</span>
+                <form action="" onSubmit={handleSubmit}>
+                <input type="number" min={0} style={{height: '24px'}} value={quantity} onChange={e=>setQuantity(e.target.value)}/>
+                 <button type="submit" style={{border: 'none', color: 'white', backgroundColor: '#ff781f', height: '30px', cursor: 'pointer'}}>Nhập kho</button>
+                </form>
                 </div>
               </div>
             </div>

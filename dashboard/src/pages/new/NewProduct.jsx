@@ -108,7 +108,7 @@ const New = ({ inputs, title }) => {
                 <Input data={price} setData={setPrice} />
 
 
-                <CKEdit setText={setDescription} text={description} className="richText" height='100px' fontSize='18px' />
+                <CKEdit setText={setDescription} text={description} className="richText" height='500px' fontSize='18px' />
               </div>
 
 

@@ -55,6 +55,7 @@ Route::prefix('v1')->group(function () {
         Route::put('/cart/updateQuantity/{card_id}/{scope}', [CartController::class, 'updateQuantity']);
         Route::group(['middleware' => ['auth:sanctum']], function () {
             Route::get('/getAmountUser', [UserController::class, 'getAmount']);
+            Route::get('/cancelOrder/{id}', [OrderController::class, 'cancelOrder']);
             Route::get('/getAmountOrder', [OrderController::class, 'getAmount']);
             Route::get('/postAmount', [PostController::class, 'getAmount']);
             Route::get('/getRevenueToday', [OrderController::class, 'getRevenueToday']);

@@ -16,7 +16,7 @@ const ListOrder = ({item}) => {
           <TableRow>
           <TableCell className="tableCell">Mã sản phẩm</TableCell>
             <TableCell className="tableCell">Sản phẩm</TableCell>
-            <TableCell className="tableCell">Số lượng</TableCell>
+            <TableCell className="tableCell">Số lượng đã bán</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

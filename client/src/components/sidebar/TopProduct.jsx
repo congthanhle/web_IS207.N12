@@ -10,7 +10,7 @@ export default function Sidebar() {
     useEffect(() => {
         const getProduct = async () => {
             const res = await axios.get(`${URI}/getTopSales`);
-            setProduct(res.data.slice(0, 6));
+            setProduct(res.data.slice(0, 8));
         }
         getProduct();
         const timerId = setTimeout(getProduct, 200);

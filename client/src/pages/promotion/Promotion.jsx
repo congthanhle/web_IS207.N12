@@ -41,7 +41,7 @@ export default function Promotion() {
 
                 <Row key={item.id}>
                   <Card className={styles.card}>
-                    <Card.Title className={styles.cardTitle} onClick={()=>handleShow(item.id)}>{`${item.name}`}</Card.Title>
+                    <Card.Title className={styles.cardTitle} onClick={()=>handleShow(item.id)}>{`${idx+1}. ${item.name}`}</Card.Title>
                     <Card.Body className={styles.cardBody}>
                       <Card.Text>
                         Chỉ còn: <b>{item.unit_price - item.discount_price} VND</b>

@@ -29,10 +29,12 @@ const New = ({ inputs, title }) => {
     }, []);
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const dataForm = new FormData();
-        dataForm.append('name', name);
-        dataForm.append('parent_id', parentId);
-        dataForm.append('cat_code', catCode);
+        const dataForm = {
+            name,
+            parent_id: parentId,
+            cat_code: catCode,
+        };
+
         try {
             const res = await axios.post(`${URI}/category`, dataForm,{ headers: {"Authorization" : `Bearer ${user.token}`} });
             res.data && window.location.replace('/categories');
@@ -71,7 +73,7 @@ const New = ({ inputs, title }) => {
                                 >
                                     {
                                         cat.map((item) => (
-                                            <MenuItem value={item.id}>{item.name}</MenuItem>
+                                            <MenuItem value={item.id} key={item.id}>{item.name}</MenuItem>
 
                                         ))
                                     }                                

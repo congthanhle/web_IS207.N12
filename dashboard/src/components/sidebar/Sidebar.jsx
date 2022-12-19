@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { Context } from '../../context/Context';
 const Sidebar = () => {
-  const {dispatch } = useContext(Context);
+  const { user, dispatch } = useContext(Context);
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
     window.location.replace('/login');
@@ -67,20 +67,18 @@ const Sidebar = () => {
             </li>
           </Link>
           <Link to="/slides" style={{ textDecoration: "none" }}>
-          <li>
-            <SettingsSystemDaydreamOutlinedIcon className="icon" />
-            <span>Slides</span>
-          </li>
+            <li>
+              <SettingsSystemDaydreamOutlinedIcon className="icon" />
+              <span>Slides</span>
+            </li>
           </Link>
-          <Link to="" style={{ textDecoration: "none" }}>
-          </Link>
-          <li onClick={handleLogout} style={{borderTop: '1px dashed rgb(155, 155, 155)', marginTop: '20px'}}>
+          <li onClick={handleLogout} style={{ borderTop: '1px dashed rgb(155, 155, 155)', marginTop: '20px' }}>
             <ExitToAppIcon className="icon" />
             <span>Logout</span>
           </li>
         </ul>
       </div>
-     
+
     </div>
   );
 };

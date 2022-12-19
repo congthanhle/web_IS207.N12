@@ -20,7 +20,6 @@ const EditProduct = ({ title }) => {
     const [cat, setCat] = useState('');
     const [price, setPrice] = useState(0);
     const [discountPrice, setDiscountPrice] = useState(0);
-    const [quantity, setQuantity] = useState(0);
     const [description, setDescription] = useState("");
     const [thumbnail, setThumbnail] = useState("");
     const [cats, setCats] = useState([]);
@@ -44,7 +43,6 @@ const EditProduct = ({ title }) => {
             setCat(res.data.cat_id);
             setPrice(res.data.unit_price);
             setDiscountPrice(res.data.discount_price);
-            setQuantity(res.data.quantity);
             setThumbnail(res.data.thumbnail);
         }
         getPost();
@@ -60,7 +58,6 @@ const EditProduct = ({ title }) => {
             cat_id: cat,
             unit_price: price,
             discount_price: discountPrice,
-            quantity
         }
         try {
             const res = await axios.put(`${URI}/product/${path}`, data,{ headers: {"Authorization" : `Bearer ${user.token}`} });
@@ -130,14 +127,11 @@ const EditProduct = ({ title }) => {
                                     Giảm giá
                                 </label>
                                 <InputUpdate data={discountPrice} setData={setDiscountPrice} />
-                                <label htmlFor="price">
-                                    Số lượng
-                                </label>
-                                <InputUpdate data={quantity} setData={setQuantity} />
+                               
 
                                 <CKEdit setText={setDescription} text={description} className="richText" height='400px' fontSize='18px' />
                             </div>
-                            <button className="sendBtn">Update</button>
+                            <button className="sendBtn">Cập nhật</button>
                         </form>
                     </div>
                 </div>

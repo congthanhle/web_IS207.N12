@@ -11,10 +11,12 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { Context } from '../../context/Context';
 import { IoMdArrowRoundBack } from 'react-icons/io';
+import { MdOutlineCancel} from 'react-icons/md';
+
 import { BiEdit } from 'react-icons/bi';
 import { URI, IMG } from '../../api';
 import Form from 'react-bootstrap/Form';
-
+import Swal from 'sweetalert2';
 import styles from './profile.module.scss';
 
 
@@ -30,6 +32,8 @@ export default function Profile() {
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
+  const [status, setStatus] = useState("");
+  const [id, setId] = useState(0);
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
   useEffect(() => {
@@ -76,7 +80,12 @@ export default function Profile() {
           phone_number: phoneNumber,
           address
         },{ headers: {"Authorization" : `Bearer ${user.token}`} });
-        res.config.data && window.location.replace('/');
+        res.config.data && Swal.fire({
+          title: 'Chỉnh sửa thành công',
+          timer: 1500,
+          icon: 'success',
+          showConfirmButton: false
+      },) && window.location.replace('/');
       } catch (err) {
 
       }
@@ -84,6 +93,24 @@ export default function Profile() {
     }
     setValidated(true);
   };
+  const handleCancel = (e) => {
+    e.preventDefault();
+    Swal.fire({
+      title: 'Bạn có muốn hủy hóa đơn này?',
+      showCancelButton: true,
+      confirmButtonText: 'Hủy hóa đơn',
+      closeButtonAriaLabel: 'Không'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = axios.get(`${URI}/cancelOrder/${id}`,{ headers: {"Authorization" : `Bearer ${user.token}`} });
+          res && Swal.fire('Hủy thành công!', '', 'success') && window.location.replace('/profile')
+        } catch (err) {
+        }    
+      } 
+    })
+     
+    }
   return (
     <Container className="mb-5">
 
@@ -179,12 +206,23 @@ export default function Profile() {
             <Col >
               {show ? (
                 <>
-                  <span className='d-flex align-items-center fs-2 mb-4' onClick={e => setShow(false)} style={{ cursor: 'pointer' }}>
+                <div className='d-flex align-items-center justify-content-between fs-2 mb-4'>
+                <span className='d-flex align-items-center ' onClick={e => setShow(false)} style={{ cursor: 'pointer' }}>
                     <IoMdArrowRoundBack className='me-4 ' />
                     <h3>Tất cả đơn hàng</h3>
+                   
                   </span>
+                  {
+                     status === 'Chờ xác nhận' && <span className='d-flex align-items-center' style={{color: 'red', cursor: 'pointer'}} onClick={handleCancel}>
+                     <MdOutlineCancel className='me-2'/>
+                     <h3>Hủy đơn</h3>
+                     </span>
+                  }
+                  
+                </div>
+                 
 
-                  <Table striped bordered hover className='fs-4 ' style={{ overflow: 'auto' }}>
+                  <Table  className='fs-4 ' style={{maxHeight: 40, borderCollapse: 'collapse' }}>
                     <thead>
                       <tr>
                         <th></th>
@@ -225,7 +263,7 @@ export default function Profile() {
                     {
                       order && order.map((item, index) => {
                         return (
-                          <tr key={index} onClick={e => { setOrderItem(item.order_items); setShow(true); }}>
+                          <tr key={index} style={{cursor: 'pointer'}} onClick={e => { setOrderItem(item.order_items); setShow(true); setStatus(item.status); setId(item.id)}}>
                             <td>{item.id}</td>
                             <td>{item.total_money}</td>
                             <td>{moment(item.created_at).format('DD-MM-YYYY HH:MM')}</td>

@@ -22,6 +22,7 @@ export default function CKEdit(props) {
                     const data= editor.getData();
                     setText(data)
                 }}
+                
                 onReady={(editor) => {
                     // You can store the "editor" and use when it is needed.
                     editor.editing.view.change(writer=>{

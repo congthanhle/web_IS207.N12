@@ -49,8 +49,8 @@ export default function Cart() {
             payment: payment,
         }
         setLoading(true);
-        await axios.post(`${URI}/order`, order, { headers: { "Authorization": `Bearer ${user.token}` } });
-        await window.location.replace('/collections');
+        const res = await axios.post(`${URI}/order`, order, { headers: { "Authorization": `Bearer ${user.token}` } });
+        res && window.location.replace('/')
 
     }
     return (
@@ -117,7 +117,7 @@ export default function Cart() {
                                                             name="payment"
                                                             value="Trực tiếp"
                                                             required
-                                                            defaultChecked
+                                                            
                                                         />
                                                     </div>
                                                     <div className="rounded border w-100 p-3">
@@ -188,7 +188,7 @@ export default function Cart() {
                                             </div>
 
                                             <Button styles={{ width: 100 }} size="lg" onClick={handlePay} className={styles.button}>
-                                                Thanh toán
+                                                Đặt hàng
                                             </Button>
                                             <Link to="/cart" className='link fs-4 d-flex justify-content-center'>
                                                 <span style={{ color: 'black', fontWeight: 500}} ><AiOutlineShoppingCart className='me-3 fs-1' />Giỏ hàng</span>

@@ -9,6 +9,7 @@ import Button from 'react-bootstrap/Button';
 import styles from './contact.module.scss';
 import axios from 'axios';
 import { URI } from '../../api';
+import Swal from 'sweetalert2';
 
 export default function Contact() {
     const [username, setUsername] = useState("");
@@ -25,7 +26,12 @@ export default function Contact() {
         dataForm.append('content', content);
         try {
             const res = await axios.post(`${URI}/feedback`, dataForm);
-            res.data && window.location.replace('/');
+            res.data && Swal.fire({
+                title: 'Gửi thành công',
+                timer: 1200,
+                icon: 'success',
+                showConfirmButton: false
+            },) && window.location.replace('/') ;
         } catch (e) { }
     }
     return (
@@ -104,7 +110,7 @@ export default function Contact() {
                             <Form.Group className="mb-5" >
                                 <Form.Control type="text" required placeholder="Nội dung" as="textarea" rows={8} className={styles.formTextArea} onChange={e => setContent(e.target.value)}/>
                             </Form.Group>
-                            <Button type="submit"> Gửi cho chúng tôi</Button>
+                            <Button type="submit">Gửi</Button>
                         </Form>
                     </Col>
                 </Row>
