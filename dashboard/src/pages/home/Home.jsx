@@ -26,8 +26,8 @@ const Home = () => {
       <div className="homeContainer">
         <Navbar />
         <div className="widgets">
-          <Widget type="user" />
-          <Widget type="order" />
+          <Widget type="user"/>
+          <Widget type="order"/>
           <Widget type="post" />
           <Widget type="revenue" />
         </div>
