@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import ListGroup from 'react-bootstrap/ListGroup';
 import styles from './sidebarProduct.module.scss';
 import {URI} from '../../api';
+import { BiArrowBack } from 'react-icons/bi';
 
 export default function Sidebar() {
     const [category, setCategory] = useState([]);
@@ -25,6 +26,7 @@ export default function Sidebar() {
     return (
         <div className={styles.sidebar}>
             <ListGroup>
+            <ListGroup.Item className='fs-3' style={{ height: 50, fontWeight: 800 }}><Link to={`/collections`} className={`link fs-3 ${styles.text}`} style={{fontWeight: 500 }}><BiArrowBack className='me-3'/>Tất cả sản phẩm</Link></ListGroup.Item>
                 <ListGroup.Item className='fs-3' style={{ height: 50, fontWeight: 500 }}>{name}</ListGroup.Item>
                 {
                     category && 

@@ -8,11 +8,10 @@ import coffeeIcon from '../../assets/images/coffeeIcon.png';
 import coffee_branch from '../../assets/images/coffee_branch.png';
 import coffee_bean from '../../assets/images/coffee_bean.png';
 import styles from './home.module.scss';
-import Navbar from '../../components/navbar/Navbar';
+import Container from 'react-bootstrap/Container';
 import axios from 'axios';
 import ProductCard from '../../components/productCard/ProductCard';
 import { URI, IMG } from '../../api';
-import { Link } from 'react-router-dom';
 
 const productAndService = [
   {
@@ -81,7 +80,7 @@ export default function Home() {
     <div className={styles.home}>
       <Slide />
       <div className={styles.homeContainer}>
-        <div border='white' className={`${styles.productAndService} ${styles.homeSession}`}>
+        <Container border='white' className={`${styles.productAndService} ${styles.homeSession}`}>
           <div className={styles.titleContainer}><span>Sản phẩm & dịch vụ</span></div>
           <Row xs={3} md={6} className="justify-content-between align-items-center g-5">
             {
@@ -103,8 +102,8 @@ export default function Home() {
 
           </Row>
 
-        </div>
-        <div className={`${styles.sale} ${styles.homeSession}`}>
+        </Container>
+        <Container className={`${styles.sale} ${styles.homeSession}`}>
 
           <div className={styles.titleContainer}>
             <img className={styles.icon} src={coffeeIcon} alt="logo" />
@@ -124,14 +123,14 @@ export default function Home() {
               ))
             }
           </Row>
-        </div>
-        <div border='white' className={`${styles.featureProducts} ${styles.homeSession}`}>
+        </Container>
+        <Container border='white' className={`${styles.featureProducts} ${styles.homeSession}`}>
 
           <div className={styles.titleContainer}>
 
             <span>Sản phẩm nổi bật</span>
           </div>
-          <Row xs={1} md={5} className="g-4">
+          <Row xs={2} md={5} className="g-4">
             {
               product.map((item, idx) => (
                 <Col key={item.id}>
@@ -141,7 +140,7 @@ export default function Home() {
             }
           </Row>
 
-        </div>
+        </Container>
         <div border='white' className={`${styles.introProduct} ${styles.homeSession}`}>
           <img className={styles.sub_img_1} src={coffee_branch} alt="" />
           <img className={styles.sub_img_2} src={coffee_bean} alt="" />
@@ -149,7 +148,7 @@ export default function Home() {
             <img />
             Tại sao bạn nên chọn Five Men Coffee
           </div>
-          <Row xs={1} md={3} className="g-4">
+          <Row xs={3} md={3} className="g-4">
 
             <Col >
               <Card className={`${styles.card} text-center`}>
@@ -188,7 +187,7 @@ export default function Home() {
           </Row>
 
         </div>
-        <div className={`${styles.blog} ${styles.homeSession}`}>
+        <Container className={`${styles.blog} ${styles.homeSession}`}>
 
           <div className={styles.titleContainer}>
             <span onClick={e => { window.location.replace('/blog') }}>Coffee Blog</span>
@@ -202,7 +201,7 @@ export default function Home() {
               ))
             }
           </Row>
-        </div>
+        </Container>
       </div>
     </div>
 

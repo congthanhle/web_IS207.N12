@@ -1,9 +1,5 @@
 @import '../../scss/variables';
 
-
-
-
-
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -16,7 +12,9 @@
     left: 0;
     right: 0;
     z-index: 1;
-
+    @media (max-width: 768px) {
+       padding: 2rem;
+    }
     .navLeft {
         display: flex;
         align-items: center;
@@ -27,26 +25,34 @@
             margin-right: 0.5rem;
             width: 11.5rem;
             height: 11.5rem;
+            @media (max-width: 768px) {
+                width: 8rem;
+                height: 8rem;
+            }
         }
 
         .logoDisc {
             display: flex;
             align-items: center;
             flex-direction: column;
-
+           
             .brandName {
                 font-size: 3rem;
                 font-weight: 700;
                 letter-spacing: 0.12rem;
                 color: $main-color;
+                @media (max-width: 768px) {
+                    font-size: 2rem;
+                }
             }
-
             .slogan {
                 font-size: 1.3rem;
+                @media (max-width: 768px) {
+                    font-size: 0.9rem;
+                }
             }
         }
     }
-
     .navLink {
         cursor: pointer;
         color: $second-color;
@@ -59,7 +65,9 @@
     .navCenter {
         display: flex;
         flex-direction: column;
-
+        @media (max-width: 768px) {
+            display: none;
+        }
         .navList {
             display: flex;
             justify-content: center;
@@ -107,7 +115,9 @@
         display: flex;
         align-items: center;
         font-size: 2.4rem;
-
+        @media (max-width: 768px) {
+            display: none;
+        }
         li {
             button {
                 width: 4.2rem;

@@ -54,8 +54,6 @@ function Collections() {
           />
         </Col>
       </Row>
-
-
     </Container>
 
   )

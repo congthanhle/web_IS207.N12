@@ -9,6 +9,7 @@ import Introduction from './pages/introduction/Introduction';
 import Promotion from './pages/promotion/Promotion';
 import Blog from './pages/blog/Blog';
 import CheckOut from './pages/checkOut/CheckOut';
+import SuccessCheckOut from './pages/checkOut/SuccessCheckout';
 import SinglePost from './pages/singlePost/SinglePost';
 import Register from './pages/register/Register';
 import Footer from './components/footer/Footer';
@@ -40,6 +41,7 @@ function App() {
           <Route path='/contact' element={<Contact/>} /> 
           <Route path='/cart' element={<Cart/>} /> 
           <Route path='/checkout' element={<CheckOut/>} /> 
+          <Route path='/success' element={<SuccessCheckOut/>} /> 
           <Route path='/profile' element={<Profile/>} /> 
           <Route path='/product/:productId' element={<SingleProduct/>} /> 
           <Route path='/productSearch/:productName' element={<Search/>} /> 

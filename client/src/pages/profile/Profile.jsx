@@ -51,7 +51,7 @@ export default function Profile() {
   useEffect(() => {
     const getOrder = async () => {
       const res = await axios.get(`${URI}/order/user/${user.user.id}`, { headers: { "Authorization": `Bearer ${user.token}` } });
-      setOrder(res.data);
+      setOrder(res.data.sort((a, b) => b.id - a.id));
     }
     getOrder();
     const timerId = setTimeout(getOrder, 100);

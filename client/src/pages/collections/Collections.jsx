@@ -10,11 +10,12 @@ import { useState, useEffect, memo } from 'react';
 import Products from '../../components/products/Products';
 import Pagination from 'react-js-pagination';
 import { URI } from '../../api';
+import Form from 'react-bootstrap/Form';
 
 function Collections() {
   const [product, setProduct] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
-
+  const [num, setNum] = useState(1);
   useEffect(() => {
 
     const getProduct = async () => {
@@ -33,16 +34,24 @@ function Collections() {
           <Col xs lg="3">
             <Sidebar />
             <TopProduct />
-
           </Col>
           <Col xs lg="9">
             <Row md={1} xs={1}>
               <Col>
                 <Row>
-                  <Col>
+                  <Col lg="9">
                     <h2>Tất cả sản phẩm</h2>
                   </Col>
-
+                  {/* <Col>
+                    <Form.Select className='fs-4' style={{ width: "100%", height: 40 }} onChange={e => setNum(e.target.value)}>
+                      <option value="1">Cũ nhất</option>
+                      <option value="2">Mới nhất</option>
+                      <option value="3">Giá: Tăng dần</option>
+                      <option value="4">Giá: Giảm dần</option>
+                      <option value="5">Tên: A-Z</option>
+                      <option value="6">Tên: Z-A</option>
+                    </Form.Select>
+                  </Col> */}
                 </Row>
               </Col>
               <Col className={styles.listProduct}>

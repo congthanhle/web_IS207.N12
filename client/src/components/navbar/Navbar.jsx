@@ -5,6 +5,8 @@ import styles from './navbar.module.scss';
 import logo from '../../assets/images/logo.png';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+
 
 
 import { FaUserAlt, FaCartPlus, FaSearch } from 'react-icons/fa';

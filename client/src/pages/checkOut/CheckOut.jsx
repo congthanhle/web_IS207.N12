@@ -17,8 +17,6 @@ import { URI, IMG } from '../../api';
 import { Link } from 'react-router-dom';
 import Spinner from 'react-bootstrap/Spinner';
 
-
-
 export default function Cart() {
     const { user } = useContext(Context);
     const [productCart, setProductCart] = useState([]);
@@ -50,7 +48,7 @@ export default function Cart() {
         }
         setLoading(true);
         const res = await axios.post(`${URI}/order`, order, { headers: { "Authorization": `Bearer ${user.token}` } });
-        res && window.location.replace('/')
+        res && window.location.replace('/success')
 
     }
     return (
@@ -58,7 +56,7 @@ export default function Cart() {
 
             <Row className="justify-content-center align-items-center h-100">
                 {
-                    loading ? <Spinner animation="border" /> :
+                    loading ? <div className='text-center fs-3' style={{marginBlock:'10vw'}}><Spinner  animation="grow" className='me-3'/> Đang tiến hành thanh toán<h3 className='mt-4'>Vui lòng đợi trong một vài giây !</h3></div> :
                         <Col md="10">
                             <div className="d-flex justify-content-between align-items-center mb-4">
                                 <h3 tag="h3" className="fw-normal mb-0 text-black">

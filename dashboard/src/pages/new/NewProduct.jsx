@@ -8,6 +8,9 @@ import CKEdit from '../../components/ckEdit/CKEdit';
 import Input from '../../components/inputField/Input';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
+
 import { URI } from '../../api';
 import { Context } from '../../context/Context';
 
@@ -86,6 +89,7 @@ const New = ({ inputs, title }) => {
                 <label htmlFor="cat">
                   Danh mục
                 </label>
+            
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
