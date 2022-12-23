@@ -51,7 +51,7 @@ const Single = () => {
 
         try {
             const res = axios.get(`${URI}/cancelOrder/${order.id}`, { headers: { "Authorization": `Bearer ${user.token}` } });
-            res && window.location.replace('/orders')
+            res.data && window.location.replace('/orders');
         } catch (err) {
         }
     }
@@ -117,7 +117,7 @@ const Single = () => {
 
                         </Select>
                         {
-                            (status === "Chờ xác nhận" && status !== "") &&
+                            (status !== "Đã hủy" && status !== "") &&
                             <>
                                 <Button variant="contained" sx={{ color: 'white', backgroundColor: '#ff781f', marginRight: '20px' }} onClick={handleSubmit}>
                                     Cập nhật

@@ -3,7 +3,8 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import ListGroup from 'react-bootstrap/ListGroup';
 import styles from './sidebarProduct.module.scss';
-import {URI} from '../../api';
+import Accordion from 'react-bootstrap/Accordion';
+import { URI } from '../../api';
 
 export default function Sidebar() {
     const [category, setCategory] = useState([]);
@@ -19,14 +20,32 @@ export default function Sidebar() {
     return (
         <div className={styles.sidebar}>
             <ListGroup>
-                <ListGroup.Item className='fs-3' style={{ height: 50, fontWeight: 500, textAlign: 'center', textTransform: 'upperCase' }}>Danh mục sản phẩm</ListGroup.Item>
+            <ListGroup.Item className='fs-3' style={{ height: 50, fontWeight: 500, textAlign: 'center'}}>DANH MỤC SẢN PHẨM</ListGroup.Item>
+            </ListGroup>
+            <Accordion >
                 {
                     category &&
                     category.map((p, index) => (
-                        p.parent_id == null && <ListGroup.Item key={index} style={{ height: 50 }}><Link to={`/collections/${p.id}`} className={`link fs-3 ${styles.text}`} >{p.name}</Link></ListGroup.Item>
+                        p.parent_id == null &&
+                        <Accordion.Item eventKey={index} key={index}>
+                            <Accordion.Header ><span style={{ fontSize: 18 }}>{p.name}</span></Accordion.Header>
+                            <Accordion.Body>
+                                <ListGroup>
+
+                                    {
+                                        category &&
+                                        category.map((c, idx) => (
+                                            c.parent_id !== null && c.parent_id === p.id && <ListGroup.Item key={idx} style={{ height: 50, fontSize: 16,border: 'none' }}><Link to={`/collections/${p.id}`} className={`link ${styles.text}`} >{c.name}</Link></ListGroup.Item>
+                                        ))
+                                    }
+                                </ListGroup>
+                            </Accordion.Body>
+                        </Accordion.Item>
                     ))
                 }
-            </ListGroup>
+
+            </Accordion>
+
         </div>
     )
 }

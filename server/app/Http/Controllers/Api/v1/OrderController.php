@@ -77,7 +77,7 @@ class OrderController extends Controller
         $total_money = $totalPrice;
        $orderItems = $order->orderItems;
         Mail::send('bill', compact(['name', 'address','phone', 'order_id', 'order_date', 'status', 'total_money', 'orderItems']), function ($email) use($user){
-            $email->subject('Hóa đơn điện tử');
+            $email->subject('Xác nhận đặt hàng');
             $email->to($user->email, $user->fullname);
         });
         Cart::destroy($cart);

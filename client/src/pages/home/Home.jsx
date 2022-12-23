@@ -145,7 +145,6 @@ export default function Home() {
           <img className={styles.sub_img_1} src={coffee_branch} alt="" />
           <img className={styles.sub_img_2} src={coffee_bean} alt="" />
           <div className={styles.titleContainer}>
-            <img />
             Tại sao bạn nên chọn Five Men Coffee
           </div>
           <Row xs={3} md={3} className="g-4">

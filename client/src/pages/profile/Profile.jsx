@@ -183,12 +183,12 @@ export default function Profile() {
                       <p className="mb-4" style={{ fontWeight: "500" }}>Email:</p>
                       <p className="ms-4">{email}</p>
                     </div>
-                    <div
-                      className="d-flex"
+                    <Row
+                      className='mb-4'
                     >
-                      <p className="mb-4" style={{ fontWeight: "500" }}>Địa chỉ:</p>
-                      <p className="ms-4">{address}</p>
-                    </div>
+                      <Col  md="2" style={{ fontWeight: "500" }}>Địa chỉ:</Col>
+                      <Col>{address}</Col>
+                    </Row>
                     <div
                       className="d-flex"
                     >
@@ -238,7 +238,7 @@ export default function Profile() {
                             <tr key={index}>
                               <td><img src={`${IMG}/${item.product.thumbnail}`} alt="" width={90} /></td>
                               <td>{item.product.name}</td>
-                              <td>{item.unit_price}</td>
+                              <td>{item.unit_price.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                               <td>{item.quantity}</td>
                             </tr>
                           )
@@ -265,7 +265,7 @@ export default function Profile() {
                         return (
                           <tr key={index} style={{cursor: 'pointer'}} onClick={e => { setOrderItem(item.order_items); setShow(true); setStatus(item.status); setId(item.id)}}>
                             <td>{item.id}</td>
-                            <td>{item.total_money}</td>
+                            <td>{item.total_money.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                             <td>{moment(item.created_at).format('DD-MM-YYYY HH:MM')}</td>
                             <td>{item.status}</td>
                           </tr>

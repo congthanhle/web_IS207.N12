@@ -12,7 +12,7 @@ export default function Cart() {
                 <AiOutlineCheckCircle style={{fontSize: "10rem", color: '#5cb85c'}}/>
                 <h3 style={{fontSize: "2.5rem"}} className="mb-5">ĐẶT HÀNG THÀNH CÔNG ! </h3>
                 <div className="mb-4" style={{fontSize: "1.9rem"}}>Cảm ơn quý khách đã đặt hàng tại Fivemen Coffee</div>
-                <div className="mb-4" style={{fontSize: "1.9rem"}}>Chúng tôi sẽ liên hệ với bạn trong thời gian sóm nhất có thể. Trong trường hợp cần gấp vui lòng gọi Hotline: 1900123123</div>
+                <div className="mb-4" style={{fontSize: "1.9rem"}}>Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất có thể. Trong trường hợp cần gấp vui lòng gọi Hotline: 1900123123</div>
                 <div className="mb-4" style={{fontSize: "1.9rem"}}>Chân thành cảm ơn !</div>
             </Row>
             <Row className="justify-content-md-center text-center">

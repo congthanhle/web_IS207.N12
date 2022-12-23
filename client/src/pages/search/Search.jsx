@@ -27,14 +27,13 @@ function Collections() {
     return () => clearTimeout(timerId);
   }, [pageNumber]);
   const { data, current_page, per_page, total } = product;
-  console.log(total)
   return (
 
     <Container className={styles.search}>
       <Row className='mt-5 mb-5'>
         <Col>
           <h2>Tìm kiếm</h2>
-          <h5>Có <span>{0 || total} sản phẩm</span> cho tìm kiếm</h5>
+          <h5>Có <span>{total || 0} sản phẩm</span> cho tìm kiếm</h5>
         </Col>
       </Row>
       <Row xs={1} md={5} className="g-4 mt-4">
@@ -42,7 +41,7 @@ function Collections() {
       </Row>
       <Row >
         <Col className={styles.pagination}>
-          <Pagination totalItemsCount={total} activePage={current_page} itemsCountPerPage={per_page}
+          <Pagination totalItemsCount={total || 0} activePage={current_page} itemsCountPerPage={per_page}
             onChange={(pageNumber) => setPageNumber(pageNumber)}
             pageRangeDisplayed={4}
 

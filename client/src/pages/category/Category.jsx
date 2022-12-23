@@ -7,7 +7,7 @@ import { useState, useEffect, } from 'react';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router';
 import Products from '../../components/products/Products';
-import SidebarChildren from '../../components/sidebar/SidebarChildren';
+import SidebarProduct from '../../components/sidebar/SidebarProduct';
 import Pagination from 'react-js-pagination';
 import styles from './category.module.scss';
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -46,14 +46,7 @@ function Category() {
         <Container className={styles.category}>
             <Row className="g-5">
                 <Col xs lg="3">
-                    {
-                        !cat.parent_id ? <SidebarChildren /> :
-                            <ListGroup>
-                                <ListGroup.Item className='fs-3' style={{ height: 50, fontWeight: 500 }}>
-                                    <Link to={`/collections/${cat.parent_id}`} className={`link fs-3`} style={{ color: 'black' }}><IoMdArrowRoundBack className='mx-4' />{cat.parent.name}</Link>
-                                </ListGroup.Item>
-                            </ListGroup>
-                    }
+                   <SidebarProduct/>
 
                 </Col>
                 <Col xs lg="9">
