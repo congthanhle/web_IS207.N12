@@ -63,35 +63,45 @@ export default function Profile() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const form = e.currentTarget;
-    if(password && password === passwordConfirmation){
-      try {
-        const res = await axios.put(`${URI}/user/${user.user.id}`, {
-          password
-        },{ headers: {"Authorization" : `Bearer ${user.token}`} });
-      } catch (err) {
-      }
-    }
-    if (form.checkValidity() === true) {
-      e.preventDefault();
-      try {
-        const res = await axios.put(`${URI}/user/${user.user.id}`, {
-          fullname,
-          phone_number: phoneNumber,
-          address
-        },{ headers: {"Authorization" : `Bearer ${user.token}`} });
-        res.config.data && Swal.fire({
-          title: 'Chỉnh sửa thành công',
-          timer: 1500,
-          icon: 'success',
-          showConfirmButton: false
-      },) && window.location.replace('/');
-      } catch (err) {
-
-      }
-     
-    }
-    setValidated(true);
+    Swal.fire({
+      title: 'Bạn có muốn cập nhật thông tin này?',
+      showCancelButton: true,
+      confirmButtonText: 'Cập nhật',
+      closeButtonAriaLabel: 'Không'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const form = e.currentTarget;
+        if(password && password === passwordConfirmation){
+          try {
+            const res = axios.put(`${URI}/user/${user.user.id}`, {
+              password
+            },{ headers: {"Authorization" : `Bearer ${user.token}`} });
+          } catch (err) {
+          }
+        }
+        if (form.checkValidity() === true) {
+          e.preventDefault();
+          try {
+            const res = axios.put(`${URI}/user/${user.user.id}`, {
+              fullname,
+              phone_number: phoneNumber,
+              address
+            },{ headers: {"Authorization" : `Bearer ${user.token}`} });
+            res.config.data && Swal.fire({
+              title: 'Chỉnh sửa thành công',
+              timer: 1500,
+              icon: 'success',
+              showConfirmButton: false
+          },) && window.location.replace('/');
+          } catch (err) {
+    
+          }
+         
+        }
+        setValidated(true);
+      } 
+    })
+   
   };
   const handleCancel = (e) => {
     e.preventDefault();

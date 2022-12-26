@@ -70,28 +70,7 @@ export default function SingleCategory() {
                                             Số lượng: {item.quantity}
                                         </Typography>
                                     </CardContent>
-                                    <CardActions>
-                                        <Link to={`/products/${item.id}`} style={{ textDecoration: "none" }}>
-                                            <VisibilityIcon style={{ color: '#ff781f', marginRight: '20px' }} />
-                                        </Link>
-                                        {
-
-                                            user.user.role_id === 2 && <>
-
-                                                <Link to={`/products/update/${item.id}`} style={{ textDecoration: "none" }}>
-                                                    <EditIcon style={{ color: '#ff781f', marginRight: '20px' }} />
-                                                </Link>
-                                                <div
-                                                    style={{ color: '#ff781f' }}
-                                                    onClick={() => handleDelete(item.id)}
-                                                    className="button"
-
-                                                >
-                                                    <DeleteOutlineIcon />
-                                                </div>
-                                            </>
-                                        }
-                                    </CardActions>
+                                    
                                     
                                     {
                                         user.user.role_id === 2 && <CardActions>

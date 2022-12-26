@@ -56,7 +56,7 @@ export default function Cart() {
 
             <Row className="justify-content-center align-items-center h-100">
                 {
-                    loading ? <div className='text-center fs-3' style={{marginBlock:'10vw'}}><Spinner  animation="grow" className='me-3'/> Đang tiến hành thanh toán<h3 className='mt-4'>Vui lòng đợi trong một vài giây !</h3></div> :
+                    loading ? <div className='text-center fs-3' style={{marginBlock:'10vw'}}><Spinner  animation="grow" className='me-3'/> Đang tiến hành đặt hàng<h3 className='mt-4'>Vui lòng đợi trong một vài giây !</h3></div> :
                         <Col md="10">
                             <div className="d-flex justify-content-between align-items-center mb-4">
                                 <h3 tag="h3" className="fw-normal mb-0 text-black">

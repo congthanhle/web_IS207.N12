@@ -35,7 +35,7 @@ export default function Sidebar() {
                                     {
                                         category &&
                                         category.map((c, idx) => (
-                                            c.parent_id !== null && c.parent_id === p.id && <ListGroup.Item key={idx} style={{ height: 50, fontSize: 16,border: 'none' }}><Link to={`/collections/${p.id}`} className={`link ${styles.text}`} >{c.name}</Link></ListGroup.Item>
+                                            c.parent_id !== null && c.parent_id === p.id && <ListGroup.Item key={idx} style={{ height: 50, fontSize: 16,border: 'none' }}><Link to={`/collections/${c.id}`} className={`link ${styles.text}`} >{c.name}</Link></ListGroup.Item>
                                         ))
                                     }
                                 </ListGroup>

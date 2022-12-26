@@ -26,7 +26,6 @@ export default function Sidebar() {
     return (
         <div className={styles.sidebar}>
             <ListGroup>
-            <ListGroup.Item className='fs-3' style={{ height: 50, fontWeight: 800 }}><Link to={`/collections`} className={`link fs-3 ${styles.text}`} style={{fontWeight: 500 }}><BiArrowBack className='me-3'/>Tất cả sản phẩm</Link></ListGroup.Item>
                 <ListGroup.Item className='fs-3' style={{ height: 50, fontWeight: 500 }}>{name}</ListGroup.Item>
                 {
                     category && 

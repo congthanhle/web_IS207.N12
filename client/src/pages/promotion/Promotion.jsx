@@ -18,7 +18,7 @@ export default function Promotion() {
   useEffect(() => {
 
     const getProduct = async () => {
-      const res = await axios.get(`${URI}/product/getComboList`);
+      const res = await axios.get(`${URI}/product/getComboList?page=${pageNumber}`);
       setProduct(res.data);
     }
     getProduct();

@@ -8,9 +8,6 @@ import CKEdit from '../../components/ckEdit/CKEdit';
 import Input from '../../components/inputField/Input';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
-
 import { URI } from '../../api';
 import { Context } from '../../context/Context';
 
@@ -21,25 +18,35 @@ const New = ({ inputs, title }) => {
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState("");
   const [thumbnail, setThumbnail] = useState(null);
+  const [catsParent, setCatsParent] = useState([]);
+  const [cat_id, setCatId] = useState(1);
   const [cats, setCats] = useState([]);
   const { user } = useContext(Context);
 
   useEffect(() => {
     const getCats = async () => {
       const res = await axios.get(`${URI}/category`);
-      setCats(res.data);
+      setCatsParent(res.data.filter(item => item.parent_id === null));
     }
     getCats();
     const timerId = setTimeout(getCats, 200);
     return () => clearTimeout(timerId);
   }, []);
-
+  useEffect(() => {
+    const getCats = async () => {
+      const res = await axios.get(`${URI}/category/${cat_id}`);
+      setCats(res.data.children);
+    }
+    getCats();
+    const timerId = setTimeout(getCats, 200);
+    return () => clearTimeout(timerId);
+  }, [cat_id]);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const dataForm = new FormData();
     dataForm.append('thumbnail', thumbnail);
     dataForm.append('name', name);
-    dataForm.append('cat_id', cat);
+    dataForm.append('cat_id', cat || cat_id);
     dataForm.append('unit_price', price);
     dataForm.append('description', description);
     try {
@@ -93,6 +100,24 @@ const New = ({ inputs, title }) => {
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
+                  value={cat_id}
+                  label="Danh mục gốc"
+                  sx={{ minWidth: '100%', mt: 1, mb: 3 }}
+                  onChange={(e) => setCatId(e.target.value)}
+                >
+                  {
+                    catsParent.map((item) => (
+                      <MenuItem value={item.id} key={item.id}>{item.name}</MenuItem>
+
+                    ))
+                  }
+                </Select>
+                <label htmlFor="cat">
+                  Loại sản phẩm
+                </label>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
                   value={cat}
                   label="Danh mục gốc"
                   sx={{ minWidth: '100%', mt: 1, mb: 3 }}
@@ -105,17 +130,12 @@ const New = ({ inputs, title }) => {
                     ))
                   }
                 </Select>
-
                 <label htmlFor="price">
                   Đơn giá
                 </label>
                 <Input data={price} setData={setPrice} />
-
-
                 <CKEdit setText={setDescription} text={description} className="richText" height='500px' fontSize='18px' />
               </div>
-
-
               <button className="sendBtn">Thêm</button>
             </form>
           </div>
