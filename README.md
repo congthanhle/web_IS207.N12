@@ -45,3 +45,11 @@ Trong quá trình thực hiện đề tài, nhóm đã sử dụng một số c�
 <img src="images/TTTK.png" />
 <h4>3.1.11 Tìm kiếm sản phẩm</h4>
 <img src="images/TKSP.png" />
+<h4>3.1.12 Khuyến mãi</h4>
+<img src="images/KM.png" />
+<h4>3.1.13 Tin tức</h4>
+<img src="images/TT.png" />
+<h4>3.1.14 Chi tiết tin tức</h4>
+<img src="images/CTTT.png" />
+<h4>3.1.15 Liên hệ</h4>
+<img src="images/LH.png" />
