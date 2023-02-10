@@ -35,3 +35,13 @@ Trong quá trình thực hiện đề tài, nhóm đã sử dụng một số c�
 <h4>3.1.6 Sản phẩm</h4>
 <img src="images/SP1.png" />
 <img src="images/SP2.png" />
+<h4>3.1.7 Chi tiết sản phẩm</h4>
+<img src="images/CTSP.png" />
+<h4>3.1.8 Giỏ hàng</h4>
+<img src="images/GH.png" />
+<h4>3.1.9 Đặt hàng</h4>
+<img src="images/DH.png" />
+<h4>3.1.10 Thông tin tài khoản</h4>
+<img src="images/TTTK.png" />
+<h4>3.1.11 Tìm kiếm sản phẩm</h4>
+<img src="images/TKSP.png" />
