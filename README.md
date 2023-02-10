@@ -12,6 +12,8 @@ Trong quá trình thực hiện đề tài, nhóm đã sử dụng một số c�
 -	Công cụ quản lý mã nguồn: Github.
 <br>
 <h4>3. Một số hình ảnh về website</h4>
-<h5>3.1 Giao diện admin</h5>
-<h6>3.1.1 Trang chủ</h6>
+<h4>3.1 Giao diện client</h4>
+<h4>3.1.1 Trang chủ</h4>
+<img src="/images/TC1" />
+<img src="/images/TC2" />
 
