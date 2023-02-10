@@ -18,4 +18,10 @@ Trong quá trình thực hiện đề tài, nhóm đã sử dụng một số c�
 <h4>3.1.1 Trang chủ</h4>
 <img src="images/TC1.png" />
 <img src="images/TC2.png" />
-
+<img src="images/TC3.png" />
+<img src="images/TC4.png" />
+<img src="images/TC5.png" />
+<img src="images/TC6.png" />
+<img src="images/TC7.png" />
+<h4>3.1.2 Đăng nhập</h4>
+<img src="images/DN.png" />
