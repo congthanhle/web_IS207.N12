@@ -10,14 +10,12 @@ import { useState, useEffect, memo } from 'react';
 import Products from '../../components/products/Products';
 import Pagination from 'react-js-pagination';
 import { URI } from '../../api';
-import Form from 'react-bootstrap/Form';
+
 
 function Collections() {
   const [product, setProduct] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
-  const [num, setNum] = useState(1);
   useEffect(() => {
-
     const getProduct = async () => {
       const res = await axios.get(`${URI}/product/list?page=${pageNumber}`);
       setProduct(res.data);
@@ -26,7 +24,8 @@ function Collections() {
     const timerId = setTimeout(getProduct, 500);
     return () => clearTimeout(timerId);
   }, [pageNumber]);
-  const { data, current_page, per_page, total } = product;
+
+  const { data, current_page, per_page, total} = product;
   return (
     <div className={styles.collections}>
       <Container>
